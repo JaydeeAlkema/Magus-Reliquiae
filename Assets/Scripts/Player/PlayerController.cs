@@ -17,6 +17,8 @@ namespace Player
 		[SerializeField] private LayerMask CollisionMask;
 		[SerializeField] private float SkinWidth = 0.02f;
 		[SerializeField] private int MaxSlideIterations = 4;
+		[SerializeField][Min(1)]
+		private int CastBufferCapacity = 8;
 
 		[Header("Enemy pushback")]
 		[SerializeField] private float PushRadius = 0.4f;
@@ -30,6 +32,13 @@ namespace Player
 		{
 			desiredDelta = Vector2.ClampMagnitude(desiredDelta, MoveSpeed * Time.fixedDeltaTime);
 			_pendingMovement += desiredDelta;
+		}
+
+		private void Awake()
+		{
+			int castBufferCapacity = Mathf.Max(1, CastBufferCapacity);
+			if (_hits.Capacity < castBufferCapacity)
+				_hits.Capacity = castBufferCapacity;
 		}
 
 		private void FixedUpdate()
@@ -94,11 +103,6 @@ namespace Player
 				float safeDistance = Mathf.Max(closest.distance - SkinWidth, 0f);
 				Vector2 safeMove = remaining.normalized * safeDistance;
 
-				// Actually move the body now, not just the local accumulator.
-				// Cast() always sweeps from wherever the Rigidbody currently is,
-				// so the next iteration needs the body to really be here, or it
-				// keeps testing from the same stale start point every time. This
-				// is what was gluing you to corners.
 				Rigidbody.position += safeMove;
 				moved += safeMove;
 

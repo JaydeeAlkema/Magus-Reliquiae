@@ -4,7 +4,16 @@ namespace Enemy
 {
 	public static class EnemyPushRegistry
 	{
-		public static readonly List<EnemyContact> Active = new();
+		public static readonly List<EnemyContact> Active = new(128);
+
+		public static void EnsureCapacity(int capacity)
+		{
+			if (capacity <= 0)
+				return;
+
+			if (Active.Capacity < capacity)
+				Active.Capacity = capacity;
+		}
 
 		public static void Register(EnemyContact enemy)
 		{
