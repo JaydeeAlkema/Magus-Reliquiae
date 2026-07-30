@@ -105,5 +105,6 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
-Assets/External Assets
-Assets/External Assets.meta
+
+# Custom rules
+Assets/Plugins
