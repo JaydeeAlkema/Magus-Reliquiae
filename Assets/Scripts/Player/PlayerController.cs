@@ -30,7 +30,7 @@ namespace Player
 
 		public void Move(Vector2 desiredDelta)
 		{
-			desiredDelta = Vector2.ClampMagnitude(desiredDelta, MoveSpeed * Time.fixedDeltaTime);
+			desiredDelta = Vector2.ClampMagnitude(desiredDelta, MoveSpeed * Time.deltaTime);
 			_pendingMovement += desiredDelta;
 		}
 
