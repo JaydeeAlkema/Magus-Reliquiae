@@ -1,10 +1,23 @@
 # AI Usage Notes
 
-## Enemy namespace
-- **EnemyPushRegistry**: Pre-sized `Active` list and added `EnsureCapacity(int)` to reduce resize spikes when many enemies register.
-- **EnemySeparationSystem**: Added expected-capacity settings and pre-sized runtime collections in `Awake`.
-- **EnemySeparationSystem**: Reworked grid clearing to clear only active cells, plus periodic stale-cell pruning for long sessions.
-- **EnemySeparationSystem**: Debug push tracking now runs only when debug + push-vector drawing is enabled.
+This file tracks gameplay-system changes that were implemented with AI assistance.
 
-## Player namespace
-- **PlayerController**: Added configurable cast buffer capacity and pre-sized `_hits` list in `Awake` to avoid growth spikes.
+## Personal Note
+
+Math-heavy logic is not my strongest area, so I use AI/LLMs to help design and validate systems with heavier math components, such as the enemy separation system.
+
+## Enemy Namespace
+
+### EnemySeparationSystem
+- Enemy push separation logic was created, refactored, and rewritten with AI assistance.
+- Added expected-capacity settings and pre-sized runtime collections in `Awake`.
+- Reworked grid clearing to clear only active cells, with periodic stale-cell pruning for long sessions.
+- Debug push tracking now runs only when debug and push-vector drawing are enabled.
+
+### EnemyPushRegistry
+- Pre-sized `Active` list and added `EnsureCapacity(int)` to reduce resize spikes when many enemies register.
+
+## Player Namespace
+
+### PlayerController
+- Added configurable cast buffer capacity and pre-sized `_hits` list in `Awake` to avoid growth spikes.
