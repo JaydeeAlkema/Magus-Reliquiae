@@ -5,6 +5,9 @@ namespace Enemy
 {
 	public class EnemySeparationSystem : MonoBehaviour
 	{
+		private const int NEIGHBOUR_RANGE = 1;
+		private const float MIN_DISTANCE_SQR = 1e-6f;
+
 		[SerializeField] private float SeparationSpeed = 2f;
 		[SerializeField] private float CellSize = 0.6f;
 		[SerializeField][Min(1)]
@@ -42,8 +45,8 @@ namespace Enemy
 		{
 			int enemyCapacity = Mathf.Max(1, ExpectedEnemyCount);
 			int activeCellCapacity = Mathf.Max(1, ExpectedActiveCells);
-			_cellBucketCapacity = Mathf.Max(1, ExpectedCellBucketSize);
 			int debugEntryCapacity = Mathf.Max(1, ExpectedDebugEntries);
+			_cellBucketCapacity = Mathf.Max(1, ExpectedCellBucketSize);
 			_framesUntilPrune = Mathf.Max(1, CellPruneIntervalFrames);
 
 			EnemyPushRegistry.EnsureCapacity(enemyCapacity);
@@ -66,32 +69,52 @@ namespace Enemy
 
 		private void BuildGrid()
 		{
+			ClearActiveBuckets();
+			AddEnemiesToGrid(EnemyPushRegistry.Active);
+			UpdatePruneCountdown();
+		}
+
+		private void ClearActiveBuckets()
+		{
 			foreach ((int, int) activeCell in _activeCells)
 			{
 				_grid[activeCell].Clear();
 			}
-			_activeCells.Clear();
 
-			List<EnemyContact> enemies = EnemyPushRegistry.Active;
+			_activeCells.Clear();
+		}
+
+		private void AddEnemiesToGrid(List<EnemyContact> enemies)
+		{
 			foreach (EnemyContact enemy in enemies)
 			{
-				(int, int) cell = CellOf(enemy.Position);
-				if (!_grid.TryGetValue(cell, out List<EnemyContact> bucket))
-				{
-					bucket = new List<EnemyContact>(_cellBucketCapacity);
-					_grid[cell] = bucket;
-				}
+				(int, int) cell = GetCellCoordinates(enemy.Position);
+				List<EnemyContact> bucket = GetOrCreateBucket(cell);
 
 				if (bucket.Count == 0)
 					_activeCells.Add(cell);
 
 				bucket.Add(enemy);
 			}
+		}
 
+		private List<EnemyContact> GetOrCreateBucket((int, int) cell)
+		{
+			if (_grid.TryGetValue(cell, out List<EnemyContact> bucket))
+				return bucket;
+
+			bucket = new List<EnemyContact>(_cellBucketCapacity);
+			_grid[cell] = bucket;
+
+			return bucket;
+		}
+
+		private void UpdatePruneCountdown()
+		{
 			_framesUntilPrune--;
 			if (_framesUntilPrune > 0)
 				return;
-			
+
 			PruneEmptyCells();
 			_framesUntilPrune = Mathf.Max(1, CellPruneIntervalFrames);
 		}
@@ -115,14 +138,17 @@ namespace Enemy
 			}
 		}
 
-		private (int, int) CellOf(Vector2 position)
+		private (int, int) GetCellCoordinates(Vector2 position)
 		{
-			return (Mathf.FloorToInt(position.x / CellSize), Mathf.FloorToInt(position.y / CellSize));
+			int cellX = Mathf.FloorToInt(position.x / CellSize);
+			int cellY = Mathf.FloorToInt(position.y / CellSize);
+			return (cellX, cellY);
 		}
 
 		private void ResolveSeparation()
 		{
 			float maxStep = SeparationSpeed * Time.fixedDeltaTime;
+			float maxStepSqr = maxStep * maxStep;
 			List<EnemyContact> enemies = EnemyPushRegistry.Active;
 			bool collectDebugPush = DrawDebug && DrawPushVectors;
 			if (collectDebugPush)
@@ -130,45 +156,56 @@ namespace Enemy
 
 			foreach (EnemyContact enemy in enemies)
 			{
-				(int cx, int cy) = CellOf(enemy.Position);
-				Vector2 push = Vector2.zero;
-
-				// Only the 3x3 neighborhood of cells around this enemy, not
-				// every enemy in the scene.
-				for (int dx = -1; dx <= 1; dx++)
-				{
-					for (int dy = -1; dy <= 1; dy++)
-					{
-						if (!_grid.TryGetValue((cx + dx, cy + dy), out List<EnemyContact> neighbors))
-							continue;
-
-						foreach (EnemyContact other in neighbors)
-						{
-							if (other == enemy)
-								continue;
-
-							Vector2 offset = enemy.Position - other.Position;
-							float combinedRadius = enemy.Radius + other.Radius;
-							float sqrDist = offset.sqrMagnitude;
-
-							if (sqrDist >= combinedRadius * combinedRadius || sqrDist < 1e-6f)
-								continue;
-
-							float dist = Mathf.Sqrt(sqrDist);
-							float overlap = combinedRadius - dist;
-							push += offset / dist * (overlap * 0.5f);
-						}
-					}
-				}
-
-				if (push.sqrMagnitude > maxStep * maxStep)
-					push = push.normalized * maxStep;
+				Vector2 push = ComputeSeparationPush(enemy, maxStep, maxStepSqr);
 
 				if (collectDebugPush && push != Vector2.zero)
 					_debugLastPush[enemy] = push;
 
 				if (push != Vector2.zero)
 					enemy.Push(push);
+			}
+		}
+
+		private Vector2 ComputeSeparationPush(EnemyContact enemy, float maxStep, float maxStepSqr)
+		{
+			(int cx, int cy) = GetCellCoordinates(enemy.Position);
+			Vector2 push = Vector2.zero;
+
+			for (int dx = -NEIGHBOUR_RANGE; dx <= NEIGHBOUR_RANGE; dx++)
+			{
+				for (int dy = -NEIGHBOUR_RANGE; dy <= NEIGHBOUR_RANGE; dy++)
+				{
+					if (!_grid.TryGetValue((cx + dx, cy + dy), out List<EnemyContact> neighbors))
+						continue;
+
+					AccumulateNeighborPush(enemy, neighbors, ref push);
+				}
+			}
+
+			if (push.sqrMagnitude > maxStepSqr)
+				push = push.normalized * maxStep;
+
+			return push;
+		}
+
+		private static void AccumulateNeighborPush(EnemyContact enemy, List<EnemyContact> neighbors, ref Vector2 push)
+		{
+			foreach (EnemyContact other in neighbors)
+			{
+				if (other == enemy)
+					continue;
+
+				Vector2 offset = enemy.Position - other.Position;
+				float combinedRadius = enemy.Radius + other.Radius;
+				float combinedRadiusSqr = combinedRadius * combinedRadius;
+				float sqrDist = offset.sqrMagnitude;
+
+				if (sqrDist >= combinedRadiusSqr || sqrDist < MIN_DISTANCE_SQR)
+					continue;
+
+				float dist = Mathf.Sqrt(sqrDist);
+				float overlap = combinedRadius - dist;
+				push += offset / dist * (overlap * 0.5f);
 			}
 		}
 

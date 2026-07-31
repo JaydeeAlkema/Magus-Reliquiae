@@ -23,7 +23,8 @@ namespace Enemy
 		public static void Unregister(EnemyContact enemy)
 		{
 			int index = Active.IndexOf(enemy);
-			if (index < 0) return;
+			if (index < 0)
+				return;
 
 			int last = Active.Count - 1;
 			Active[index] = Active[last];
