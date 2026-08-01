@@ -9,6 +9,7 @@ namespace Player
 		[Header("References")]
 		[SerializeField] private Rigidbody2D Rigidbody;
 		[SerializeField] private ContactFilter2D ContactFilter;
+		[SerializeField] private bool ForceInterpolation = true;
 
 		[Header("Movement")]
 		[SerializeField] private float MoveSpeed = 1f;
@@ -28,17 +29,14 @@ namespace Player
 
 		private Vector2 _pendingMovement;
 
-		public void Move(Vector2 desiredDelta)
-		{
-			desiredDelta = Vector2.ClampMagnitude(desiredDelta, MoveSpeed * Time.deltaTime);
-			_pendingMovement += desiredDelta;
-		}
-
 		private void Awake()
 		{
 			int castBufferCapacity = Mathf.Max(1, CastBufferCapacity);
 			if (_hits.Capacity < castBufferCapacity)
 				_hits.Capacity = castBufferCapacity;
+
+			if (ForceInterpolation && Rigidbody && Rigidbody.interpolation == RigidbodyInterpolation2D.None)
+				Rigidbody.interpolation = RigidbodyInterpolation2D.Interpolate;
 		}
 
 		private void FixedUpdate()
@@ -46,6 +44,12 @@ namespace Player
 			Vector2 enemyPush = ComputeEnemyPush();
 			SlideMove(_pendingMovement + enemyPush);
 			_pendingMovement = Vector2.zero;
+		}
+
+		public void Move(Vector2 desiredDelta)
+		{
+			desiredDelta = Vector2.ClampMagnitude(desiredDelta, MoveSpeed * Time.deltaTime);
+			_pendingMovement += desiredDelta;
 		}
 
 		private Vector2 ComputeEnemyPush()
