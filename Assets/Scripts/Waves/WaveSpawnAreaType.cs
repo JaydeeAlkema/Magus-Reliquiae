@@ -1,8 +1,9 @@
 ﻿namespace Waves
 {
-	public enum WaveSpawnLocation
+	public enum WaveSpawnAreaType
 	{
 		Horizontal = 0,
 		Vertical = 1,
+		Combined = 2,
 	}
 }

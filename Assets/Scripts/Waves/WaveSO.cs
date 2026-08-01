@@ -8,10 +8,10 @@ namespace Waves
 	{
 		[Header("Wave")]
 		public int EnemiesToSpawn;
-		public WaveSpawnLocation SpawnLocation;
 		public List<WaveEnemy> PossibleEnemies;
 		public List<WaveEnemy> GuaranteedEnemies;
 		public float TimeUntilNextWave;
+		public WaveSpawnAreaType WaveAreaType;
 
 		public List<Enemy.Enemy> GetEnemiesToSpawn()
 		{

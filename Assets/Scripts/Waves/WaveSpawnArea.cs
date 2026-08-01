@@ -1,200 +1,133 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Waves
 {
 	public class WaveSpawnArea : MonoBehaviour
 	{
-		[Header("Spawn Area")]
-		[SerializeField] private int MinCells;
-		[SerializeField] private Vector2Int CellSize;
-		[SerializeField] private WaveSpawnAreaExpandDirection ExpandDirection;
-		[SerializeField] private float SpawnOffset = 1f;
-		[SerializeField] private UnityEngine.Camera TargetCamera;
+		private const int DEFAULT_CANDIDATE_ATTEMPTS = 12;
+		private const float DEFAULT_BASE_MIN_SPACING = 1f;
+		private const float MIN_SPACING_CLAMP = 0.05f;
+		private const float MIN_HALF_EXTENT = 0.5f;
+		private const float DENSITY_SPACING_FACTOR = 0.45f;
+		private const float FULL_AREA_MULTIPLIER = 2f;
+		private const int MIN_ENEMY_COUNT_FOR_DENSITY = 1;
+		private const float INITIAL_BEST_SCORE = -1f;
+		private const float MIN_GIZMO_DIMENSION = 1f;
+		private const float GIZMO_DEPTH = 0.01f;
+		private const float GIZMO_CENTER_RADIUS = 0.08f;
 
-		[Header("Debugging")]
-		[SerializeField] private bool DrawGizmos;
+		private static readonly Color DefaultGizmoFillColor = new(0.1f, 0.8f, 1f, 0.12f);
+		private static readonly Color DefaultGizmoOutlineColor = new(0.1f, 0.8f, 1f, 0.9f);
 
-		private Dictionary<(int, int), bool> _cells;
-		private Vector2Int _spawnArea;
-		private UnityEngine.Camera _cachedCamera;
-		private float _cachedOrthographicSize = -1f;
-		private float _cachedAspect = -1f;
-		private int _cachedMinCells = -1;
-		private Vector2Int _cachedCellSize = new(-1, -1);
-		private WaveSpawnAreaExpandDirection _cachedExpandDirection;
+		[Header("Settings")]
+		[SerializeField] private Vector2Int SpawnArea;
+		[SerializeField] private WaveSpawnAreaType WaveAreaType;
 
-		private void Awake()
+		public WaveSpawnAreaType WaveSpawnAreaType => WaveAreaType;
+
+		public void DistributeEnemies(List<Enemy.Enemy> enemies)
 		{
-			_cells = new Dictionary<(int, int), bool>();
-			RefreshArea(forceResize: true);
-		}
-
-		private void LateUpdate()
-		{
-			if (NeedsResize())
-				Resize();
-
-			Reposition();
-		}
-
-		private void OnValidate()
-		{
-			if (_cells == null)
-				_cells = new Dictionary<(int, int), bool>();
-
-			RefreshArea(forceResize: true);
-		}
-
-		private void RefreshArea(bool forceResize)
-		{
-			if (forceResize)
-				Resize(force: true);
-
-			Reposition();
-		}
-
-		private bool NeedsResize()
-		{
-			if (_cachedCamera != TargetCamera)
-				return true;
-
-			if (_cachedMinCells != MinCells || _cachedCellSize != CellSize || _cachedExpandDirection != ExpandDirection)
-				return true;
-
-			if (!TargetCamera || !TargetCamera.orthographic)
-				return false;
-
-			return !Mathf.Approximately(_cachedOrthographicSize, TargetCamera.orthographicSize) ||
-			       !Mathf.Approximately(_cachedAspect, TargetCamera.aspect);
-		}
-
-		private void Reposition()
-		{
-			if (!TargetCamera)
+			if (enemies == null || enemies.Count == 0)
 				return;
 
-			if (!TargetCamera.orthographic)
-				return;
-
-			float halfViewHeight = TargetCamera.orthographicSize;
-			float halfViewWidth = halfViewHeight * TargetCamera.aspect;
-
-			Vector3 cameraPosition = TargetCamera.transform.position;
-			Vector3 currentPosition = this.transform.position;
-
-			float halfCellWidth = Mathf.Max(1, CellSize.x) * 0.5f;
-			float halfCellHeight = Mathf.Max(1, CellSize.y) * 0.5f;
-			int cols = Mathf.Max(1, _spawnArea.x / Mathf.Max(1, CellSize.x));
-			int rows = Mathf.Max(1, _spawnArea.y / Mathf.Max(1, CellSize.y));
-			float orthogonalOffsetX = -((cols - 1) * Mathf.Max(1, CellSize.x)) * 0.5f;
-			float orthogonalOffsetY = -((rows - 1) * Mathf.Max(1, CellSize.y)) * 0.5f;
-
-			float cameraPositionX = cameraPosition.x;
-			float cameraPositionY = cameraPosition.y;
-			float currentPositionZ = currentPosition.z;
-			this.transform.position = ExpandDirection switch
-			{
-				WaveSpawnAreaExpandDirection.Up => new Vector3(cameraPositionX + orthogonalOffsetX, cameraPositionY + halfViewHeight + halfCellHeight + SpawnOffset, currentPositionZ),
-				WaveSpawnAreaExpandDirection.Down => new Vector3(cameraPositionX + orthogonalOffsetX, cameraPositionY - halfViewHeight - halfCellHeight - SpawnOffset, currentPositionZ),
-				WaveSpawnAreaExpandDirection.Left => new Vector3(cameraPositionX - halfViewWidth - halfCellWidth - SpawnOffset, cameraPositionY + orthogonalOffsetY, currentPositionZ),
-				_ => new Vector3(cameraPositionX + halfViewWidth + halfCellWidth + SpawnOffset, cameraPositionY + orthogonalOffsetY, currentPositionZ),
-			};
+			List<Vector2> points = GetSpawnPoints(enemies.Count);
+			PlaceEnemies(enemies, points);
 		}
 
-		private void Resize(bool force = false)
+		public List<Vector2> GetSpawnPoints(int count)
 		{
-			int cellWidth = Mathf.Max(1, CellSize.x);
-			int cellHeight = Mathf.Max(1, CellSize.y);
-			int minCells = Mathf.Max(1, MinCells);
+			List<Vector2> points = new(count);
 
-			float fullViewWidth = 0f;
-			float fullViewHeight = 0f;
+			Vector2 center = this.transform.position;
+			float maxX = Mathf.Max(MIN_HALF_EXTENT, SpawnArea.x * MIN_HALF_EXTENT);
+			float maxY = Mathf.Max(MIN_HALF_EXTENT, SpawnArea.y * MIN_HALF_EXTENT);
+			Vector2 halfExtents = new(
+				maxX,
+				maxY);
 
-			if (TargetCamera && TargetCamera.orthographic)
+			float area = halfExtents.x * FULL_AREA_MULTIPLIER * (halfExtents.y * FULL_AREA_MULTIPLIER);
+			float densitySpacing = Mathf.Sqrt(area / Mathf.Max(MIN_ENEMY_COUNT_FOR_DENSITY, count)) * DENSITY_SPACING_FACTOR;
+			float minSpacing = Mathf.Max(MIN_SPACING_CLAMP, Mathf.Min(DEFAULT_BASE_MIN_SPACING, densitySpacing));
+			float minSpacingSqr = minSpacing * minSpacing;
+
+			for (int i = 0; i < count; i++)
 			{
-				fullViewHeight = TargetCamera.orthographicSize * 2f;
-				fullViewWidth = fullViewHeight * TargetCamera.aspect;
-			}
+				Vector2 bestCandidate = RandomPointInArea(center, halfExtents);
+				float bestScore = INITIAL_BEST_SCORE;
 
-			bool expandVertically = ExpandDirection is WaveSpawnAreaExpandDirection.Up or WaveSpawnAreaExpandDirection.Down;
-
-			int floorToIntWidth = Mathf.FloorToInt(fullViewWidth / cellWidth);
-			int floorToIntHeight = Mathf.FloorToInt(fullViewHeight / cellHeight);
-
-			int cols = expandVertically ? Mathf.Max(1, floorToIntWidth) : minCells;
-			int rows = expandVertically ? minCells : Mathf.Max(1, floorToIntHeight);
-
-			Vector2Int newSpawnArea = new(cols * cellWidth, rows * cellHeight);
-			if (!force && _spawnArea == newSpawnArea)
-				return;
-
-			_spawnArea = newSpawnArea;
-			_cachedCamera = TargetCamera;
-			_cachedOrthographicSize = TargetCamera && TargetCamera.orthographic ? TargetCamera.orthographicSize : -1f;
-			_cachedAspect = TargetCamera && TargetCamera.orthographic ? TargetCamera.aspect : -1f;
-			_cachedMinCells = MinCells;
-			_cachedCellSize = CellSize;
-			_cachedExpandDirection = ExpandDirection;
-			PopulateArea();
-		}
-
-		private void PopulateArea()
-		{
-			int cols = Mathf.Max(1, _spawnArea.x / Mathf.Max(1, CellSize.x));
-			int rows = Mathf.Max(1, _spawnArea.y / Mathf.Max(1, CellSize.y));
-
-			_cells.Clear();
-
-			for (int y = 0; y < rows; y++)
-			{
-				for (int x = 0; x < cols; x++)
+				for (int attempt = 0; attempt < DEFAULT_CANDIDATE_ATTEMPTS; attempt++)
 				{
-					int cellX = x;
-					int cellY = y;
+					Vector2 candidate = RandomPointInArea(center, halfExtents);
+					float score = GetNearestDistanceSqr(candidate, points);
 
-					switch (ExpandDirection)
+					if (score > bestScore)
 					{
-						case WaveSpawnAreaExpandDirection.Down:
-							cellY = -y;
-							break;
-
-						case WaveSpawnAreaExpandDirection.Left:
-							cellX = -x;
-							break;
-
-						case WaveSpawnAreaExpandDirection.Up:
-						case WaveSpawnAreaExpandDirection.Right:
-							break;
-
-						default:
-							throw new ArgumentOutOfRangeException();
+						bestScore = score;
+						bestCandidate = candidate;
 					}
 
-					_cells[(cellX, cellY)] = false;
+					if (score >= minSpacingSqr)
+						break;
 				}
+
+				points.Add(bestCandidate);
 			}
+
+			return points;
+		}
+
+		public void PlaceEnemies(List<Enemy.Enemy> enemies, List<Vector2> points)
+		{
+			for (int i = 0; i < enemies.Count; i++)
+			{
+				Enemy.Enemy enemy = enemies[i];
+				if (!enemy)
+					continue;
+
+				Vector3 current = enemy.transform.position;
+				Vector2 point = points[i];
+				enemy.transform.position = new Vector3(point.x, point.y, current.z);
+			}
+		}
+
+		private static float GetNearestDistanceSqr(Vector2 point, List<Vector2> existingPoints)
+		{
+			if (existingPoints.Count == 0)
+				return float.PositiveInfinity;
+
+			float nearest = float.PositiveInfinity;
+			foreach (Vector2 existingPoint in existingPoints)
+			{
+				float d = (point - existingPoint).sqrMagnitude;
+				if (d < nearest)
+					nearest = d;
+			}
+
+			return nearest;
+		}
+
+		private static Vector2 RandomPointInArea(Vector2 center, Vector2 halfExtents)
+		{
+			float rangeX = Random.Range(-halfExtents.x, halfExtents.x);
+			float rangeY = Random.Range(-halfExtents.y, halfExtents.y);
+			return center + new Vector2(rangeX, rangeY);
 		}
 
 		private void OnDrawGizmos()
 		{
-			if (!DrawGizmos)
-				return;
+			Vector3 center = this.transform.position;
+			float width = Mathf.Max(MIN_GIZMO_DIMENSION, SpawnArea.x);
+			float height = Mathf.Max(MIN_GIZMO_DIMENSION, SpawnArea.y);
+			Vector3 size = new(width, height, GIZMO_DEPTH);
 
-			Gizmos.color = Color.yellow;
-			Gizmos.DrawWireCube(this.transform.position, new Vector3(CellSize.x, CellSize.y, 0));
+			Gizmos.color = DefaultGizmoFillColor;
+			Gizmos.DrawCube(center, size);
 
-			if (_cells == null || _cells.Count == 0)
-				return;
+			Gizmos.color = DefaultGizmoOutlineColor;
+			Gizmos.DrawWireCube(center, size);
 
-			Gizmos.color = Color.blue;
-			foreach (KeyValuePair<(int, int), bool> cell in _cells)
-			{
-				Vector2Int cellPosition = new(cell.Key.Item1 * CellSize.x, cell.Key.Item2 * CellSize.y);
-				Gizmos.DrawWireCube(this.transform.position + new Vector3(cellPosition.x, cellPosition.y, 0), new Vector3(CellSize.x, CellSize.y, 0));
-			}
-
+			Gizmos.DrawSphere(center, GIZMO_CENTER_RADIUS);
 		}
 	}
 }
