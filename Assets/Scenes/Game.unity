@@ -281,6 +281,62 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &387961024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 387961026}
+  - component: {fileID: 387961025}
+  m_Layer: 0
+  m_Name: Enemy Wave System
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &387961025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387961024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52401104bea4447ac3efb0635ece2b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Waves.WaveManager
+  Waves:
+  - {fileID: 11400000, guid: 04c219d28e3c1294bab27115781c5f42, type: 2}
+  WaveSpawnAreas:
+  - {fileID: 1866619960}
+  - {fileID: 1229497506}
+  - {fileID: 512638973}
+  - {fileID: 2111743936}
+  TimeToStartFirstWave: 5
+  MaxEnemiesSpawnedPerFrame: 8
+  EnemiesToPrewarm:
+  - {fileID: 1774304268393592231, guid: 03c3cf9f6c4630f499619b50c4d3cec5, type: 3}
+  PrewarmCountPerType: 10
+--- !u!4 &387961026
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387961024}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &512638971
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +363,7 @@ Transform:
   m_GameObject: {fileID: 512638971}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.1632123, y: -9.5, z: 0}
+  m_LocalPosition: {x: -11, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -325,12 +381,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4ed5dc8ca549a7b889bd04b6883178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Waves.WaveSpawnArea
-  MinCells: 8
-  CellSize: {x: 1, y: 1}
-  ExpandDirection: 2
-  SpawnOffset: 1
-  TargetCamera: {fileID: 519420031}
-  DrawGizmos: 1
+  SpawnArea: {x: 10, y: 20}
+  WaveAreaType: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,7 +753,7 @@ Transform:
   m_GameObject: {fileID: 1229497504}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: -11.5, z: 0}
+  m_LocalPosition: {x: 0, y: -16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -719,12 +771,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4ed5dc8ca549a7b889bd04b6883178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Waves.WaveSpawnArea
-  MinCells: 8
-  CellSize: {x: 1, y: 1}
-  ExpandDirection: 1
-  SpawnOffset: 1
-  TargetCamera: {fileID: 519420031}
-  DrawGizmos: 1
+  SpawnArea: {x: 10, y: 10}
+  WaveAreaType: 1
 --- !u!1 &1292658479
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,7 +909,7 @@ Transform:
   m_GameObject: {fileID: 1866619958}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 11.5, z: 0}
+  m_LocalPosition: {x: 0, y: 16.380001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -879,12 +927,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4ed5dc8ca549a7b889bd04b6883178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Waves.WaveSpawnArea
-  MinCells: 8
-  CellSize: {x: 1, y: 1}
-  ExpandDirection: 0
-  SpawnOffset: 1
-  TargetCamera: {fileID: 519420031}
-  DrawGizmos: 1
+  SpawnArea: {x: 10, y: 10}
+  WaveAreaType: 1
 --- !u!1 &2111743934
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,7 +955,7 @@ Transform:
   m_GameObject: {fileID: 2111743934}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.1632123, y: -9.5, z: 0}
+  m_LocalPosition: {x: 11, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -929,12 +973,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4ed5dc8ca549a7b889bd04b6883178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Waves.WaveSpawnArea
-  MinCells: 8
-  CellSize: {x: 1, y: 1}
-  ExpandDirection: 3
-  SpawnOffset: 1
-  TargetCamera: {fileID: 519420031}
-  DrawGizmos: 1
+  SpawnArea: {x: 10, y: 20}
+  WaveAreaType: 0
 --- !u!114 &2123112418 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4674792363013746386, guid: 161fbb5ac1a35724395448714cd27a11, type: 3}
@@ -1298,6 +1338,7 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 83450251}
+  - {fileID: 387961026}
   - {fileID: 620918255}
   - {fileID: 354943668}
   - {fileID: 1292658482}
