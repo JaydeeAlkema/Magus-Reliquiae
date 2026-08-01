@@ -5,6 +5,17 @@ namespace Waves
 {
 	public class WaveSpawnArea : MonoBehaviour
 	{
+		private enum WaveSpawnCameraSide
+		{
+			Left = 0,
+			Right = 1,
+			Top = 2,
+			Bottom = 3,
+		}
+
+		private const float VIEWPORT_EDGE_MIN = 0f;
+		private const float VIEWPORT_EDGE_MAX = 1f;
+		private const float VIEWPORT_CENTER = 0.5f;
 		private const int DEFAULT_CANDIDATE_ATTEMPTS = 12;
 		private const float DEFAULT_BASE_MIN_SPACING = 1f;
 		private const float MIN_SPACING_CLAMP = 0.05f;
@@ -24,7 +35,21 @@ namespace Waves
 		[SerializeField] private Vector2Int SpawnArea;
 		[SerializeField] private WaveSpawnAreaType WaveAreaType;
 
+		[Header("Camera Anchor")]
+		[SerializeField] private bool StickToCamera = true;
+		[SerializeField] private WaveSpawnCameraSide CameraSide;
+		[SerializeField] private Vector2 CameraOffset;
+		[SerializeField] private UnityEngine.Camera TargetCamera;
+
 		public WaveSpawnAreaType WaveSpawnAreaType => WaveAreaType;
+
+		private void LateUpdate()
+		{
+			if (!StickToCamera)
+				return;
+
+			StickAreaToCameraEdge();
+		}
 
 		public void DistributeEnemies(List<Enemy.Enemy> enemies)
 		{
@@ -112,6 +137,31 @@ namespace Waves
 			float rangeX = Random.Range(-halfExtents.x, halfExtents.x);
 			float rangeY = Random.Range(-halfExtents.y, halfExtents.y);
 			return center + new Vector2(rangeX, rangeY);
+		}
+
+		private void StickAreaToCameraEdge()
+		{
+			if (!TargetCamera)
+				return;
+
+			float cameraToAreaDistance = Mathf.Abs(this.transform.position.z - TargetCamera.transform.position.z);
+			Vector3 viewportPoint = GetViewportPointForSide(cameraToAreaDistance);
+			Vector3 worldPoint = TargetCamera.ViewportToWorldPoint(viewportPoint);
+			Vector2 anchoredPoint = (Vector2)worldPoint + CameraOffset;
+
+			this.transform.position = new Vector3(anchoredPoint.x, anchoredPoint.y, this.transform.position.z);
+		}
+
+		private Vector3 GetViewportPointForSide(float cameraToAreaDistance)
+		{
+			return CameraSide switch
+			{
+				WaveSpawnCameraSide.Left => new Vector3(VIEWPORT_EDGE_MIN, VIEWPORT_CENTER, cameraToAreaDistance),
+				WaveSpawnCameraSide.Right => new Vector3(VIEWPORT_EDGE_MAX, VIEWPORT_CENTER, cameraToAreaDistance),
+				WaveSpawnCameraSide.Top => new Vector3(VIEWPORT_CENTER, VIEWPORT_EDGE_MAX, cameraToAreaDistance),
+				WaveSpawnCameraSide.Bottom => new Vector3(VIEWPORT_CENTER, VIEWPORT_EDGE_MIN, cameraToAreaDistance),
+				_ => new Vector3(VIEWPORT_CENTER, VIEWPORT_CENTER, cameraToAreaDistance),
+			};
 		}
 
 		private void OnDrawGizmos()
