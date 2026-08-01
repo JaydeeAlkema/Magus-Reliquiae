@@ -12,6 +12,7 @@ namespace Enemy
 		public float CollisionRadius = 1f;
 		
 		[Header("Combat")]
-		public float Damage = 1f;
+		public int Health = 10;
+		public int Damage = 1;
 	}
 }
