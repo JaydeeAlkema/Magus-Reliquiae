@@ -23,9 +23,6 @@ namespace Enemy
 
 		public void MoveTowardsTarget()
 		{
-			if (_targetPos == Vector2.zero)
-				return;
-
 			float maxDistanceDelta = _moveSpeed * Time.fixedDeltaTime;
 			_transform.position = Vector2.MoveTowards(
 				_transform.position,
