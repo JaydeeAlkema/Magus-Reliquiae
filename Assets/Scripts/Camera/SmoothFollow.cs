@@ -2,7 +2,7 @@
 
 namespace Camera
 {
-	public class SmoothCameraFollow : MonoBehaviour
+	public class SmoothFollow : MonoBehaviour
 	{
 		[Header("Camera Follow Settings")]
 		[SerializeField] private Transform Target;
