@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Todo
 {
@@ -7,6 +8,7 @@ namespace Todo
 	{
 		public string Category;
 		public string Name;
+		[TextArea(2, 6)] public string Description;
 		public TodoStatus Status;
 	}
 }

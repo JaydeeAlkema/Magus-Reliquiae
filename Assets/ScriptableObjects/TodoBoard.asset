@@ -12,4 +12,108 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bb5583713e7feb4f8c632285c080082, type: 3}
   m_Name: TodoBoard
   m_EditorClassIdentifier: Assembly-CSharp::Todo.TodoBoardSO
-  Tasks: []
+  Tasks:
+  - Category: Architecture
+    Name: Define relic runtime architecture and responsibilities
+    Description: Decide which classes own relic data runtime state trigger dispatch and player integration so behavior is predictable and extensible.
+    Status: 0
+  - Category: Architecture
+    Name: Define player stat model with base plus modifiers
+    Description: Create a stat pipeline that combines base stats and additive or multiplicative modifiers from relics without order bugs.
+    Status: 0
+  - Category: Data
+    Name: Expand RelicSO with id rarity max level and tags
+    Description: Add stable identifiers and metadata fields to each relic asset so systems can filter and reference relics safely.
+    Status: 0
+  - Category: Data
+    Name: Add per level effect values and upgrade weighting data
+    Description: Store level scaling values and offer weights so each upgrade step can be balanced directly in assets.
+    Status: 0
+  - Category: Data
+    Name: Create RelicCatalogueSO listing all relic definitions
+    Description: Build a central catalogue asset used by upgrade generation and content management to avoid scattered references.
+    Status: 0
+  - Category: Runtime
+    Name: Implement RelicInstance runtime state object
+    Description: Represent per run relic state like current level cooldown timers stacks and temporary effect state.
+    Status: 0
+  - Category: Runtime
+    Name: Replace placeholder IRelic with lifecycle behavior interface
+    Description: Define explicit callbacks for acquire remove level up tick and event driven triggers so all relics share one contract.
+    Status: 0
+  - Category: Runtime
+    Name: Implement RelicInventory as central relic system manager
+    Description: Manage owned relic instances add and upgrade flow behavior updates and safe cleanup from one runtime owner.
+    Status: 0
+  - Category: Runtime
+    Name: Add event hub for combat and level related relic triggers
+    Description: Publish gameplay events such as enemy killed player hit projectile impact and level up for relics to subscribe to.
+    Status: 0
+  - Category: Leveling
+    Name: Implement player XP and level progression service
+    Description: Track xp gains compute next level thresholds and emit level up events with deterministic progression rules.
+    Status: 0
+  - Category: Leveling
+    Name: Trigger upgrade flow when player levels up
+    Description: Connect level up events to pause gameplay and open the relic selection flow each time a level threshold is reached.
+    Status: 0
+  - Category: Upgrades
+    Name: Build weighted upgrade offer generator
+    Description: Generate a set of upgrade options using rarity and context weights so the choices feel varied but controlled.
+    Status: 0
+  - Category: Upgrades
+    Name: Exclude maxed relics and support upgrade fallback rules
+    Description: Prevent invalid offers and provide fallback logic when pools are exhausted to always return valid choices.
+    Status: 0
+  - Category: UI
+    Name: Implement relic selection cards with icon name and description
+    Description: Build card visuals and bindings to present each offered relic clearly with readable metadata.
+    Status: 0
+  - Category: UI
+    Name: Wire RelicUpgradeUI choice to relic system apply methods
+    Description: Send selected card actions into add or upgrade APIs and close the upgrade flow reliably after selection.
+    Status: 0
+  - Category: StateMachine
+    Name: Implement UpgradeScreenState enter update and exit flow
+    Description: Finish state behavior so entering upgrade state shows UI waits for selection and exits back to gameplay correctly.
+    Status: 0
+  - Category: StateMachine
+    Name: Pause and resume gameplay simulation around upgrades
+    Description: Freeze active gameplay systems during upgrade decisions and restore simulation once the player confirms a choice.
+    Status: 0
+  - Category: Combat
+    Name: Implement passive stat relic category
+    Description: Support relics that immediately modify player or weapon stats and persist those modifiers across levels.
+    Status: 0
+  - Category: Combat
+    Name: Implement triggered relic category on events
+    Description: Support relic effects that proc from combat events with cooldown and chance handling.
+    Status: 0
+  - Category: Combat
+    Name: Implement projectile spawning relic category
+    Description: Add relics that create and control projectiles including fire rate lifetime damage and targeting behavior.
+    Status: 0
+  - Category: Combat
+    Name: Implement chain effect relic category explosion to lightning
+    Description: Implement multi stage effects where one trigger causes secondary and tertiary effects such as explosion then storm ticks.
+    Status: 0
+  - Category: Performance
+    Name: Add pooling for relic spawned projectiles and area effects
+    Description: Reuse projectile and area effect objects to reduce allocations and frame spikes during heavy combat.
+    Status: 0
+  - Category: Content
+    Name: Create first five relic assets for vertical slice
+    Description: Author a representative starter set of relics covering passive triggered projectile and chain archetypes.
+    Status: 0
+  - Category: Balancing
+    Name: Tune level curve and relic rarity weights
+    Description: Adjust progression speed and offer probabilities to keep power growth satisfying without runaway scaling.
+    Status: 0
+  - Category: QA
+    Name: Add playmode tests for add upgrade and max level behavior
+    Description: Cover inventory and upgrade lifecycle cases so adding leveling and cap behavior remain stable over changes.
+    Status: 0
+  - Category: QA
+    Name: Validate chain relic interactions and event ordering
+    Description: Verify chained effects execute in deterministic order and do not double trigger or miss events.
+    Status: 0

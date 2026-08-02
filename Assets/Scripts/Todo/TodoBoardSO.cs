@@ -11,13 +11,14 @@ namespace Todo
 
 		public IReadOnlyList<TodoTask> AllTasks => Tasks;
 
-		public TodoTask AddTask(string category, string name, TodoStatus status = TodoStatus.Todo)
+		public TodoTask AddTask(string category, string name, TodoStatus status = TodoStatus.Todo, string description = "")
 		{
 			TodoTask task = new()
 			{
 				Category = category ?? string.Empty,
 				Name = name ?? string.Empty,
-				Status = status
+				Description = description ?? string.Empty,
+				Status = status,
 			};
 
 			Tasks.Add(task);
@@ -34,7 +35,7 @@ namespace Todo
 					continue;
 
 				if (!string.IsNullOrWhiteSpace(category) &&
-					!string.Equals(task.Category, category, StringComparison.OrdinalIgnoreCase))
+				    !string.Equals(task.Category, category, StringComparison.OrdinalIgnoreCase))
 				{
 					continue;
 				}
@@ -48,15 +49,14 @@ namespace Todo
 
 		public bool TrySetStatus(string name, TodoStatus status, string category = null)
 		{
-			for (int i = 0; i < Tasks.Count; i++)
+			foreach (TodoTask task in Tasks)
 			{
-				TodoTask task = Tasks[i];
 				bool nameMatch = string.Equals(task.Name, name, StringComparison.OrdinalIgnoreCase);
 				if (!nameMatch)
 					continue;
 
 				if (!string.IsNullOrWhiteSpace(category) &&
-					!string.Equals(task.Category, category, StringComparison.OrdinalIgnoreCase))
+				    !string.Equals(task.Category, category, StringComparison.OrdinalIgnoreCase))
 				{
 					continue;
 				}
@@ -71,9 +71,9 @@ namespace Todo
 		public int CountByStatus(TodoStatus status)
 		{
 			int count = 0;
-			for (int i = 0; i < Tasks.Count; i++)
+			foreach (TodoTask task in Tasks)
 			{
-				if (Tasks[i].Status == status)
+				if (task.Status == status)
 					count++;
 			}
 
