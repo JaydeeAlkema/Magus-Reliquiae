@@ -23,6 +23,8 @@ namespace Waves
 		[SerializeField] private List<Enemy.Enemy> EnemiesToPrewarm;
 		[SerializeField] private int PrewarmCountPerType = 10;
 
+		public IReadOnlyList<WaveSpawnArea> SpawnAreas => WaveSpawnAreas;
+
 		private List<WaveSO> _wavesCopy = new();
 		private WaveSO _currentWave;
 		private float _waveSpawnTimer;

@@ -385,7 +385,7 @@ MonoBehaviour:
   WaveAreaType: 0
   StickToCamera: 1
   CameraSide: 0
-  CameraOffset: {x: -14, y: 0}
+  CameraOffset: {x: -8, y: 0}
   TargetCamera: {fileID: 519420031}
 --- !u!1 &519420028
 GameObject:
@@ -779,7 +779,7 @@ MonoBehaviour:
   WaveAreaType: 1
   StickToCamera: 1
   CameraSide: 3
-  CameraOffset: {x: 0, y: -18}
+  CameraOffset: {x: 0, y: -8}
   TargetCamera: {fileID: 519420031}
 --- !u!1 &1292658479
 GameObject:
@@ -939,7 +939,7 @@ MonoBehaviour:
   WaveAreaType: 1
   StickToCamera: 1
   CameraSide: 2
-  CameraOffset: {x: 0, y: 18}
+  CameraOffset: {x: 0, y: 8}
   TargetCamera: {fileID: 519420031}
 --- !u!1 &2111743934
 GameObject:
@@ -989,7 +989,7 @@ MonoBehaviour:
   WaveAreaType: 0
   StickToCamera: 1
   CameraSide: 1
-  CameraOffset: {x: 14, y: 0}
+  CameraOffset: {x: 8, y: 0}
   TargetCamera: {fileID: 519420031}
 --- !u!114 &2123112418 stripped
 MonoBehaviour:
@@ -1144,10 +1144,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1520267091003934272, guid: 161fbb5ac1a35724395448714cd27a11, type: 3}
-      propertyPath: m_Interpolate
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1687392807869315318, guid: 161fbb5ac1a35724395448714cd27a11, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1192,14 +1188,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4674792363013746386, guid: 161fbb5ac1a35724395448714cd27a11, type: 3}
-      propertyPath: MoveSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4674792363013746386, guid: 161fbb5ac1a35724395448714cd27a11, type: 3}
-      propertyPath: MaxEnemyPushSpeed
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 5540758612535743186, guid: 161fbb5ac1a35724395448714cd27a11, type: 3}
+      propertyPath: WaveManager
+      value: 
+      objectReference: {fileID: 387961025}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -102,6 +102,15 @@ namespace Waves
 			return points;
 		}
 
+		public Vector2 GetRandomPoint()
+		{
+			Vector2 center = this.transform.position;
+			float maxX = Mathf.Max(MIN_HALF_EXTENT, SpawnArea.x * MIN_HALF_EXTENT);
+			float maxY = Mathf.Max(MIN_HALF_EXTENT, SpawnArea.y * MIN_HALF_EXTENT);
+			Vector2 halfExtents = new(maxX, maxY);
+			return RandomPointInArea(center, halfExtents);
+		}
+
 		public void PlaceEnemies(List<Enemy.Enemy> enemies, List<Vector2> points)
 		{
 			for (int i = 0; i < enemies.Count; i++)
@@ -110,6 +119,7 @@ namespace Waves
 				if (!enemy)
 					continue;
 
+				enemy.SetSpawnAreaType(WaveAreaType);
 				Vector3 current = enemy.transform.position;
 				Vector2 point = points[i];
 				enemy.transform.position = new Vector3(point.x, point.y, current.z);
