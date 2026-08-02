@@ -11,12 +11,12 @@ namespace Enemy
 		private EnemyMovement _movement;
 		private EnemyContact _contact;
 
-		private PlayerController _player;
+		private Player.Player _player;
 
 		private void OnEnable()
 		{
 			// Testing purposes.
-			_player = FindAnyObjectByType<PlayerController>();
+			_player = FindAnyObjectByType<Player.Player>();
 
 			_movement ??= new EnemyMovement();
 			_movement.Setup(this, Config);
