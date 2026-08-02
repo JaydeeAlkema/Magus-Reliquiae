@@ -1,13 +1,22 @@
-﻿using UnityEngine;
+﻿using StateMachine;
+using UnityEngine;
 
 namespace Game
 {
 	public class GameManager : MonoBehaviour
 	{
+		private GameState _gameState;
+
 		private void Awake()
 		{
+			_gameState = new GameState(new MainMenuState());
+
 			Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
-			Debug.Log($"Target frame rate set to {Application.targetFrameRate} FPS");
+		}
+
+		private void Update()
+		{
+			_gameState.Update();
 		}
 	}
 }
