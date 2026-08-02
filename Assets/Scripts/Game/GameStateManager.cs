@@ -2,11 +2,11 @@
 
 namespace Game
 {
-	public class GameState
+	public class GameStateManager
 	{
 		private readonly StateMachine.StateMachine _stateMachine;
 
-		public GameState(State gameStartState)
+		public GameStateManager(State gameStartState)
 		{
 			_stateMachine = new StateMachine.StateMachine();
 			_stateMachine.Setup(gameStartState);
@@ -14,7 +14,7 @@ namespace Game
 
 		public void Update()
 		{
-			_stateMachine?.Update();
+			_stateMachine.Update();
 		}
 	}
 }

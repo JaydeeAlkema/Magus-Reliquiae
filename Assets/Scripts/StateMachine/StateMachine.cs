@@ -6,42 +6,40 @@ namespace StateMachine
 	{
 		public event Action<State, State> onStateChange;
 
-		public State StartState;
-		public State CurrentState;
-
-		public bool IsReady;
+		public State CurrentState { get; private set; }
+		public bool IsReady { get; private set; }
 
 		public void Setup(State startState)
 		{
-			StartState = startState;
-			CurrentState = startState;
+
+			CurrentState = startState ?? throw new ArgumentNullException(nameof(startState));
+			StateMachineLog.Log($"Starting state machine with {CurrentState.GetType().Name}");
+			CurrentState.OnEnter();
 
 			IsReady = true;
 		}
 
 		public void Update()
 		{
-			if (!IsReady)
-				return;
-
-			Simulate();
-		}
-
-		private void Simulate()
-		{
-			if (CurrentState == null)
+			if (!IsReady || CurrentState == null)
 				return;
 
 			CurrentState.Update();
 			if (!CurrentState.IsDone)
 				return;
 
-			State nextState = CurrentState.NextState;
-			if (nextState == null)
-				return;
-
 			State previousState = CurrentState;
+			State nextState = previousState.NextState;
+			if (nextState == null)
+			{
+				StateMachineLog.LogError($"{previousState.GetType().Name} completed without a next state.");
+				return;
+			}
+
+			previousState.OnExit();
 			CurrentState = nextState;
+			StateMachineLog.Log($"Transitioning from {previousState.GetType().Name} to {nextState.GetType().Name}");
+			CurrentState.OnEnter();
 			onStateChange?.Invoke(previousState, CurrentState);
 		}
 	}

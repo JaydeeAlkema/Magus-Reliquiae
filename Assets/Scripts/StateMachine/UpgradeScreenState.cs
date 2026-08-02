@@ -9,15 +9,10 @@ namespace StateMachine
 
 		public override void OnEnter()
 		{
-			throw new NotImplementedException();
+			throw new InvalidOperationException($"{nameof(UpgradeScreenState)} has not been implemented yet.");
 		}
-		public override void OnExit()
-		{
-			throw new NotImplementedException();
-		}
-		public override void Update()
-		{
-			throw new NotImplementedException();
-		}
+
+		public override void OnExit() { }
+		public override void Update() { }
 	}
 }

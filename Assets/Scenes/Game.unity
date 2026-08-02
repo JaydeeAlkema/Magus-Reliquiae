@@ -363,7 +363,7 @@ Transform:
   m_GameObject: {fileID: 512638971}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14, y: 0, z: 0}
+  m_LocalPosition: {x: -13, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -381,11 +381,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4ed5dc8ca549a7b889bd04b6883178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Waves.WaveSpawnArea
-  SpawnArea: {x: 10, y: 25}
+  SpawnArea: {x: 10, y: 30}
   WaveAreaType: 0
   StickToCamera: 1
   CameraSide: 0
-  CameraOffset: {x: -8, y: 0}
+  CameraOffset: {x: -6, y: 0}
   TargetCamera: {fileID: 519420031}
 --- !u!1 &519420028
 GameObject:
@@ -494,7 +494,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -757,7 +757,7 @@ Transform:
   m_GameObject: {fileID: 1229497504}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -18, z: 0}
+  m_LocalPosition: {x: 0, y: -21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -779,7 +779,7 @@ MonoBehaviour:
   WaveAreaType: 1
   StickToCamera: 1
   CameraSide: 3
-  CameraOffset: {x: 0, y: -8}
+  CameraOffset: {x: 0, y: -6}
   TargetCamera: {fileID: 519420031}
 --- !u!1 &1292658479
 GameObject:
@@ -917,7 +917,7 @@ Transform:
   m_GameObject: {fileID: 1866619958}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 18, z: 0}
+  m_LocalPosition: {x: 0, y: 21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -939,7 +939,7 @@ MonoBehaviour:
   WaveAreaType: 1
   StickToCamera: 1
   CameraSide: 2
-  CameraOffset: {x: 0, y: 8}
+  CameraOffset: {x: 0, y: 6}
   TargetCamera: {fileID: 519420031}
 --- !u!1 &2111743934
 GameObject:
@@ -967,7 +967,7 @@ Transform:
   m_GameObject: {fileID: 2111743934}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14, y: 0, z: 0}
+  m_LocalPosition: {x: 13, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -985,11 +985,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4ed5dc8ca549a7b889bd04b6883178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Waves.WaveSpawnArea
-  SpawnArea: {x: 10, y: 25}
+  SpawnArea: {x: 10, y: 30}
   WaveAreaType: 0
   StickToCamera: 1
   CameraSide: 1
-  CameraOffset: {x: 8, y: 0}
+  CameraOffset: {x: 6, y: 0}
   TargetCamera: {fileID: 519420031}
 --- !u!114 &2123112418 stripped
 MonoBehaviour:

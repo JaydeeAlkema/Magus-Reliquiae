@@ -5,18 +5,28 @@ namespace Game
 {
 	public class GameManager : MonoBehaviour
 	{
-		private GameState _gameState;
+		private GameStateManager _gameStateManager;
 
 		private void Awake()
 		{
-			_gameState = new GameState(new MainMenuState());
+			DontDestroyOnLoad(this.gameObject);
 
-			Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+			int refreshRate = Mathf.RoundToInt((float)Screen.currentResolution.refreshRateRatio.value);
+			if (refreshRate <= 0)
+			{
+				refreshRate = 60;
+			}
+
+			Application.targetFrameRate = Application.isMobilePlatform
+				? Mathf.Min(refreshRate, 60)
+				: refreshRate;
+
+			_gameStateManager = new GameStateManager(new StartGameState());
 		}
 
 		private void Update()
 		{
-			_gameState.Update();
+			_gameStateManager.Update();
 		}
 	}
 }

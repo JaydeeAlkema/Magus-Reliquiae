@@ -4,9 +4,9 @@ using UnityEngine.SceneManagement;
 
 namespace StateMachine
 {
-	public class MainMenuState : State
+	public class StartGameState : State
 	{
-		private const int GAME_SCENE_BUILD_INDEX = 2;
+		private const int MAIN_MENU_SCENE_BUILD_INDEX = 1;
 
 		public override bool IsDone { get; protected set; }
 		public override State NextState { get; protected set; }
@@ -18,13 +18,13 @@ namespace StateMachine
 			IsDone = false;
 			NextState = null;
 
-			_loadOperation = SceneManager.LoadSceneAsync(GAME_SCENE_BUILD_INDEX);
+			_loadOperation = SceneManager.LoadSceneAsync(MAIN_MENU_SCENE_BUILD_INDEX);
 			if (_loadOperation == null)
 			{
-				throw new InvalidOperationException($"Failed to load game scene at build index {GAME_SCENE_BUILD_INDEX}.");
+				throw new InvalidOperationException($"Failed to load main menu scene at build index {MAIN_MENU_SCENE_BUILD_INDEX}.");
 			}
 
-			_loadOperation.completed += OnGameSceneLoaded;
+			_loadOperation.completed += OnMainMenuSceneLoaded;
 		}
 
 		public override void OnExit()
@@ -34,16 +34,19 @@ namespace StateMachine
 				return;
 			}
 
-			_loadOperation.completed -= OnGameSceneLoaded;
+			_loadOperation.completed -= OnMainMenuSceneLoaded;
 			_loadOperation = null;
 		}
 
 		public override void Update() { }
 
-		private void OnGameSceneLoaded(AsyncOperation _)
+		private void OnMainMenuSceneLoaded(AsyncOperation _)
 		{
-			_loadOperation.completed -= OnGameSceneLoaded;
+			_loadOperation.completed -= OnMainMenuSceneLoaded;
 			_loadOperation = null;
+
+			NextState = new MainMenuState();
+			IsDone = true;
 		}
 	}
 }
