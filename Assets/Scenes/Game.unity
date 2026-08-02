@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c354e285ecc41efbe04285eacab8024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy.EnemySeparationSystem
-  SeparationSpeed: 1.5
+  SeparationSpeed: 1
   CellSize: 3
   ExpectedEnemyCount: 256
   ExpectedActiveCells: 128
@@ -582,7 +582,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000d188c74a
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
