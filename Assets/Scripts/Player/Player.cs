@@ -1,3 +1,5 @@
+using PlayerStats;
+using Relic;
 using UnityEngine;
 
 namespace Player
@@ -24,14 +26,25 @@ namespace Player
 
 		private PlayerMovement _movement;
 		private PlayerEnemyPush _enemyPush;
+		private PlayerStatsModel _stats;
+		private RelicInventory _relicInventory;
+
+		public PlayerStatsModel Stats => _stats;
+		public RelicInventory Relics => _relicInventory;
 
 		private void Awake()
 		{
+			_stats = new PlayerStatsModel();
+			_stats.SetBaseValue(PlayerStatType.MoveSpeed, MoveSpeed);
+			_stats.SetBaseValue(PlayerStatType.PushRadius, PushRadius);
+			_stats.SetBaseValue(PlayerStatType.MaxEnemyPushSpeed, MaxEnemyPushSpeed);
+
 			_movement ??= new PlayerMovement();
-			_movement.Setup(Rigidbody, ContactFilter, MoveSpeed, SkinWidth, MaxSlideIterations, CastBufferCapacity);
+			_movement.Setup(Rigidbody, ContactFilter, SkinWidth, MaxSlideIterations, CastBufferCapacity);
 
 			_enemyPush ??= new PlayerEnemyPush();
 			_enemyPush.Setup(PushRadius, MaxEnemyPushSpeed);
+			_relicInventory = new RelicInventory(_stats);
 
 			if (ForceInterpolation && Rigidbody && Rigidbody.interpolation == RigidbodyInterpolation2D.None)
 				Rigidbody.interpolation = RigidbodyInterpolation2D.Interpolate;
@@ -39,6 +52,10 @@ namespace Player
 
 		private void FixedUpdate()
 		{
+			_enemyPush.SetTuning(
+				_stats.GetValue(PlayerStatType.PushRadius),
+				_stats.GetValue(PlayerStatType.MaxEnemyPushSpeed));
+
 			Vector2 movementDelta = _movement.ConsumePendingMovement();
 			Vector2 enemyPush = _enemyPush.Compute(Rigidbody.position);
 			_movement.Move(movementDelta + enemyPush);
@@ -46,6 +63,8 @@ namespace Player
 
 		public void Move(Vector2 desiredDelta)
 		{
+			float maxMove = _stats.GetValue(PlayerStatType.MoveSpeed) * Time.deltaTime;
+			desiredDelta = Vector2.ClampMagnitude(desiredDelta, maxMove);
 			_movement.AddInput(desiredDelta);
 		}
 	}

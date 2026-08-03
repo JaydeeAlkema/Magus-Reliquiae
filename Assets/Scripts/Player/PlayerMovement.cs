@@ -9,7 +9,6 @@ namespace Player
 
 		private Rigidbody2D _rigidbody;
 		private ContactFilter2D _contactFilter;
-		private float _moveSpeed;
 		private float _skinWidth;
 		private int _maxSlideIterations;
 		private Vector2 _pendingMovement;
@@ -17,14 +16,12 @@ namespace Player
 		public void Setup(
 			Rigidbody2D rigidbody,
 			ContactFilter2D contactFilter,
-			float moveSpeed,
 			float skinWidth,
 			int maxSlideIterations,
 			int castBufferCapacity)
 		{
 			_rigidbody = rigidbody;
 			_contactFilter = contactFilter;
-			_moveSpeed = moveSpeed;
 			_skinWidth = skinWidth;
 			_maxSlideIterations = maxSlideIterations;
 
@@ -35,7 +32,6 @@ namespace Player
 
 		public void AddInput(Vector2 desiredDelta)
 		{
-			desiredDelta = Vector2.ClampMagnitude(desiredDelta, _moveSpeed * Time.deltaTime);
 			_pendingMovement += desiredDelta;
 		}
 

@@ -21,3 +21,8 @@ Math-heavy logic is not my strongest area, so I use AI/LLMs to help design and v
 
 ### PlayerController
 - Added configurable cast buffer capacity and pre-sized `_hits` list in `Awake` to avoid growth spikes.
+
+## Relic and Player Stats Foundation
+
+- The initial foundation and direction for the relic and player stats system were laid out by me.
+- The implementation was then expanded with AI assistance into concrete runtime/data structures and player stat wiring.

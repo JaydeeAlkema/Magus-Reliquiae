@@ -16,19 +16,19 @@ MonoBehaviour:
   - Category: Architecture
     Name: Define relic runtime architecture and responsibilities
     Description: Decide which classes own relic data runtime state trigger dispatch and player integration so behavior is predictable and extensible.
-    Status: 0
+    Status: 1
   - Category: Architecture
     Name: Define player stat model with base plus modifiers
     Description: Create a stat pipeline that combines base stats and additive or multiplicative modifiers from relics without order bugs.
-    Status: 0
+    Status: 1
   - Category: Data
     Name: Expand RelicSO with id rarity max level and tags
     Description: Add stable identifiers and metadata fields to each relic asset so systems can filter and reference relics safely.
-    Status: 0
+    Status: 1
   - Category: Data
     Name: Add per level effect values and upgrade weighting data
     Description: Store level scaling values and offer weights so each upgrade step can be balanced directly in assets.
-    Status: 0
+    Status: 1
   - Category: Data
     Name: Create RelicCatalogueSO listing all relic definitions
     Description: Build a central catalogue asset used by upgrade generation and content management to avoid scattered references.
@@ -36,15 +36,15 @@ MonoBehaviour:
   - Category: Runtime
     Name: Implement RelicInstance runtime state object
     Description: Represent per run relic state like current level cooldown timers stacks and temporary effect state.
-    Status: 0
+    Status: 1
   - Category: Runtime
     Name: Replace placeholder IRelic with lifecycle behavior interface
     Description: Define explicit callbacks for acquire remove level up tick and event driven triggers so all relics share one contract.
-    Status: 0
+    Status: 1
   - Category: Runtime
     Name: Implement RelicInventory as central relic system manager
     Description: Manage owned relic instances add and upgrade flow behavior updates and safe cleanup from one runtime owner.
-    Status: 0
+    Status: 1
   - Category: Runtime
     Name: Add event hub for combat and level related relic triggers
     Description: Publish gameplay events such as enemy killed player hit projectile impact and level up for relics to subscribe to.

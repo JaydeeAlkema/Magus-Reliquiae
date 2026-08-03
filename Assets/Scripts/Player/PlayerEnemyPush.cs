@@ -14,6 +14,12 @@ namespace Player
 			_maxEnemyPushSpeed = maxEnemyPushSpeed;
 		}
 
+		public void SetTuning(float pushRadius, float maxEnemyPushSpeed)
+		{
+			_pushRadius = pushRadius;
+			_maxEnemyPushSpeed = maxEnemyPushSpeed;
+		}
+
 		public Vector2 Compute(Vector2 playerPos)
 		{
 			Vector2 push = Vector2.zero;
