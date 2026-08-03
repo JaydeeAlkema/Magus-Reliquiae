@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccd5322d98469ab4ba080d68d5ac2ce0, type: 3}
+  m_Name: StormSigil
+  m_EditorClassIdentifier: Assembly-CSharp::Relic.RelicSO
+  Id: storm-sigil
+  DisplayName: Storm Sigil
+  Description: Adds a burst of damage and mobility.
+  Icon: {fileID: 0}
+  Rarity: 3
+  MaxLevel: 3
+  Tags:
+  - passive
+  - elite
+  Levels:
+  - Description: +12 damage and +8% speed.
+    StatModifiers:
+    - Stat: 4
+      Operation: 0
+      Value: 12
+    - Stat: 0
+      Operation: 1
+      Value: 0.08
+  - Description: +18 damage and +12% speed.
+    StatModifiers:
+    - Stat: 4
+      Operation: 0
+      Value: 18
+    - Stat: 0
+      Operation: 1
+      Value: 0.12
+  - Description: +24 damage and +16% speed.
+    StatModifiers:
+    - Stat: 4
+      Operation: 0
+      Value: 24
+    - Stat: 0
+      Operation: 1
+      Value: 0.16
+  ShapePerLevel:
+  - Cells:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+  - Cells:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 2, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+  - Cells:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 2, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    - {x: 2, y: 1}

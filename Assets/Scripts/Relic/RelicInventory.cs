@@ -57,11 +57,11 @@ namespace Relic
 
 			RemoveLevelModifiers(instance, instance.Level);
 
-			if (_behaviorById.TryGetValue(relicId, out IRelicBehavior behavior))
-			{
-				behavior.OnRemoved(instance, _runtimeContext);
-				_behaviorById.Remove(relicId);
-			}
+			if (!_behaviorById.TryGetValue(relicId, out IRelicBehavior behavior))
+				return _ownedById.Remove(relicId);
+
+			behavior.OnRemoved(instance, _runtimeContext);
+			_behaviorById.Remove(relicId);
 
 			return _ownedById.Remove(relicId);
 		}
@@ -70,8 +70,10 @@ namespace Relic
 		{
 			foreach (KeyValuePair<string, IRelicBehavior> kvp in _behaviorById)
 			{
-				if (_ownedById.TryGetValue(kvp.Key, out RelicInstance instance))
-					kvp.Value.OnTick(instance, deltaTime, _runtimeContext);
+				if (!_ownedById.TryGetValue(kvp.Key, out RelicInstance instance))
+					continue;
+
+				kvp.Value.OnTick(instance, deltaTime, _runtimeContext);
 			}
 		}
 
@@ -79,8 +81,10 @@ namespace Relic
 		{
 			foreach (KeyValuePair<string, IRelicBehavior> kvp in _behaviorById)
 			{
-				if (_ownedById.TryGetValue(kvp.Key, out RelicInstance instance))
-					kvp.Value.OnTrigger(instance, trigger, _runtimeContext);
+				if (!_ownedById.TryGetValue(kvp.Key, out RelicInstance instance))
+					continue;
+
+				kvp.Value.OnTrigger(instance, trigger, _runtimeContext);
 			}
 		}
 
@@ -93,8 +97,7 @@ namespace Relic
 			string sourceId = BuildModifierSource(instance.Definition.Id, level);
 			foreach (RelicStatModifier modifier in levelData.StatModifiers)
 			{
-				_runtimeContext.PlayerStats.AddModifier(
-					new StatModifier(modifier.Stat, modifier.Operation, modifier.Value, sourceId));
+				_runtimeContext.PlayerStats.AddModifier(new StatModifier(modifier.Stat, modifier.Operation, modifier.Value, sourceId));
 			}
 		}
 

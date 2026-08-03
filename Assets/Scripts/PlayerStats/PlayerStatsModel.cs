@@ -15,7 +15,7 @@ namespace PlayerStats
 
 		public float GetBaseValue(PlayerStatType stat)
 		{
-			return _baseValues.TryGetValue(stat, out float value) ? value : 0f;
+			return _baseValues.GetValueOrDefault(stat, 0f);
 		}
 
 		public void AddModifier(StatModifier modifier)
@@ -56,9 +56,8 @@ namespace PlayerStats
 
 			float additive = 0f;
 			float multiplicative = 1f;
-			for (int i = 0; i < list.Count; i++)
+			foreach (StatModifier modifier in list)
 			{
-				StatModifier modifier = list[i];
 				if (modifier.Operation == StatModifierOperation.Add)
 				{
 					additive += modifier.Value;

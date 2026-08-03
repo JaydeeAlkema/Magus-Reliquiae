@@ -1,4 +1,5 @@
 ﻿using System;
+using Game;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,10 +9,17 @@ namespace StateMachine
 	{
 		private const int GAME_SCENE_BUILD_INDEX = 2;
 
+		private readonly GameContext _context;
+
 		public override bool IsDone { get; protected set; }
 		public override State NextState { get; protected set; }
 
 		private AsyncOperation _loadOperation;
+
+		public MainMenuState(GameContext context)
+		{
+			_context = context;
+		}
 
 		public override void OnEnter()
 		{
@@ -30,9 +38,7 @@ namespace StateMachine
 		public override void OnExit()
 		{
 			if (_loadOperation == null)
-			{
 				return;
-			}
 
 			_loadOperation.completed -= OnGameSceneLoaded;
 			_loadOperation = null;
@@ -44,6 +50,9 @@ namespace StateMachine
 		{
 			_loadOperation.completed -= OnGameSceneLoaded;
 			_loadOperation = null;
+
+			NextState = new GameplayState(_context);
+			IsDone = true;
 		}
 	}
 }

@@ -15,103 +15,139 @@ MonoBehaviour:
   Tasks:
   - Category: Architecture
     Name: Define relic runtime architecture and responsibilities
-    Description: Decide which classes own relic data runtime state trigger dispatch and player integration so behavior is predictable and extensible.
-    Status: 1
+    Description: DONE - Bag plus Board plus PlayerRelicManager design. Bag holds unplaced instances. Board is a Tetris-style 2D grid where only placed relics are active. PlayerRelicManager owns both and manages all transitions.
+    Status: 2
   - Category: Architecture
     Name: Define player stat model with base plus modifiers
-    Description: Create a stat pipeline that combines base stats and additive or multiplicative modifiers from relics without order bugs.
-    Status: 1
+    Description: DONE - PlayerStatsModel uses additive and multiplicative modifier pipeline keyed by sourceId for clean relic add and remove.
+    Status: 2
   - Category: Data
     Name: Expand RelicSO with id rarity max level and tags
-    Description: Add stable identifiers and metadata fields to each relic asset so systems can filter and reference relics safely.
-    Status: 1
+    Description: DONE - RelicSO has Id DisplayName Description Icon Rarity MaxLevel Tags and Levels list.
+    Status: 2
   - Category: Data
     Name: Add per level effect values and upgrade weighting data
-    Description: Store level scaling values and offer weights so each upgrade step can be balanced directly in assets.
-    Status: 1
+    Description: DONE - RelicLevelData holds Description and StatModifiers per level.
+    Status: 2
+  - Category: Data
+    Name: Add RelicShape to RelicSO
+    Description: DONE - RelicShape class added with Vector2Int Cells array. RelicSO has ShapePerLevel array and GetShape(level) method. Defaults to 1x1 if not set.
+    Status: 2
   - Category: Data
     Name: Create RelicCatalogueSO listing all relic definitions
-    Description: Build a central catalogue asset used by upgrade generation and content management to avoid scattered references.
-    Status: 0
+    Description: Build a central catalogue asset used by offer generation and content management. Already has class definition but no asset created and not yet wired to offer system.
+    Status: 1
   - Category: Runtime
     Name: Implement RelicInstance runtime state object
-    Description: Represent per run relic state like current level cooldown timers stacks and temporary effect state.
-    Status: 1
+    Description: DONE - RelicInstance has Definition Level IsMaxLevel TryLevelUp InstanceId AnchorPosition IsPlaced SetPlaced ClearPlaced CooldownRemaining and BehaviorTimers array. Timer state persists across unequip.
+    Status: 2
   - Category: Runtime
-    Name: Replace placeholder IRelic with lifecycle behavior interface
-    Description: Define explicit callbacks for acquire remove level up tick and event driven triggers so all relics share one contract.
-    Status: 1
+    Name: Implement IRelicBehavior lifecycle interface
+    Description: DONE - Interface defines OnAcquired OnRemoved OnLevelChanged OnTick OnTrigger. Behaviors are paused not destroyed on unequip so cooldown state survives.
+    Status: 2
   - Category: Runtime
-    Name: Implement RelicInventory as central relic system manager
-    Description: Manage owned relic instances add and upgrade flow behavior updates and safe cleanup from one runtime owner.
-    Status: 1
+    Name: Replace RelicInventory with PlayerRelicManager
+    Description: DONE - PlayerRelicManager owns RelicBag and RelicBoard. Only board relics apply modifiers and tick behaviors. Bag relics are inert. IsInteractionLocked blocks moves during gameplay. MergeResult enum covers all merge outcomes including shape conflict.
+    Status: 2
+  - Category: Runtime
+    Name: Implement RelicBag
+    Description: DONE - RelicBag is an unordered list of unplaced RelicInstances with OnRelicAdded and OnRelicRemoved events. Multiple copies of same definition allowed.
+    Status: 2
+  - Category: Runtime
+    Name: Implement RelicBoard
+    Description: DONE - RelicBoard is a 2D occupancy grid backed by RelicInstance array. TryPlace validates shape fit. Remove clears all cells and calls ClearPlaced. CanPlaceIgnoring supports merge re-shape check. Resize expands board for unlock progression.
+    Status: 2
+  - Category: Runtime
+    Name: Implement PlayerRelicManager
+    Description: Owns RelicBag and RelicBoard. Exposes AcquireToBag PlaceOnBoard RemoveFromBoard and MergeOnBoard. Applies and removes stat modifiers when board state changes. Manages behavior lifecycle. Has IsInteractionLocked flag that blocks moves during gameplay. Only board relics tick and receive triggers.
+    Status: 0
   - Category: Runtime
     Name: Add event hub for combat and level related relic triggers
-    Description: Publish gameplay events such as enemy killed player hit projectile impact and level up for relics to subscribe to.
+    Description: Publish gameplay events such as EnemyKilled PlayerHit ProjectileImpact and LevelUp for relics to subscribe via IRelicBehavior.OnTrigger.
+    Status: 0
+  - Category: Runtime
+    Name: Handle merge shape conflict on upgrade
+    Description: When a bag relic is merged onto a board relic the upgraded level may have a larger shape. If the new shape does not fit in the current position warn the player and either block the merge or auto-move the upgraded relic to the bag.
     Status: 0
   - Category: Leveling
     Name: Implement player XP and level progression service
-    Description: Track xp gains compute next level thresholds and emit level up events with deterministic progression rules.
-    Status: 0
+    Description: DONE - PlayerXPService tracks CurrentXP CurrentLevel LevelProgress XPToNextLevel. AddXP fires OnLevelUp for each threshold crossed. Cumulative threshold array configurable via SerializeField on Player.
+    Status: 2
   - Category: Leveling
-    Name: Trigger upgrade flow when player levels up
-    Description: Connect level up events to pause gameplay and open the relic selection flow each time a level threshold is reached.
-    Status: 0
+    Name: Trigger acquirement flow when player levels up
+    Description: DONE - GameplayState subscribes to PlayerXPService.OnLevelUp. On level up sets _levelUpPending flag then transitions to UpgradeScreenState in Update with fresh RelicOfferGenerator offers. Context flows GameManager -> StartGameState -> MainMenuState -> GameplayState -> UpgradeScreenState.
+    Status: 2
   - Category: Upgrades
-    Name: Build weighted upgrade offer generator
-    Description: Generate a set of upgrade options using rarity and context weights so the choices feel varied but controlled.
-    Status: 0
+    Name: Build weighted relic offer generator
+    Description: DONE - RelicOfferGenerator uses weighted random selection by RelicRarity. Default weights Common=60 Rare=25 Epic=12 Legendary=3. Configurable via GameManager inspector. Returns unique offers up to requested count with graceful fallback.
+    Status: 2
   - Category: Upgrades
     Name: Exclude maxed relics and support upgrade fallback rules
-    Description: Prevent invalid offers and provide fallback logic when pools are exhausted to always return valid choices.
-    Status: 0
-  - Category: UI
-    Name: Implement relic selection cards with icon name and description
-    Description: Build card visuals and bindings to present each offered relic clearly with readable metadata.
-    Status: 0
-  - Category: UI
-    Name: Wire RelicUpgradeUI choice to relic system apply methods
-    Description: Send selected card actions into add or upgrade APIs and close the upgrade flow reliably after selection.
-    Status: 0
+    Description: Offer generator currently returns all relics weighted by rarity. Exclusion of truly-maxed relics deferred to balancing phase. Generator returns all available if pool smaller than requested count.
+    Status: 1
   - Category: StateMachine
-    Name: Implement UpgradeScreenState enter update and exit flow
-    Description: Finish state behavior so entering upgrade state shows UI waits for selection and exits back to gameplay correctly.
-    Status: 0
+    Name: Implement UpgradeScreenState
+    Description: DONE - Pauses Time.timeScale=0 on enter, unlocks IsInteractionLocked. Exposes Offers list and OnOffersReady OnOfferSelected OnExiting events for Phase-3 UI. SelectOffer adds to bag. Dismiss restores timeScale=1 locks board and transitions back to GameplayState.
+    Status: 2
   - Category: StateMachine
-    Name: Pause and resume gameplay simulation around upgrades
-    Description: Freeze active gameplay systems during upgrade decisions and restore simulation once the player confirms a choice.
-    Status: 0
+    Name: Pause and resume gameplay simulation around inventory
+    Description: DONE - UpgradeScreenState.OnEnter sets Time.timeScale=0 and OnExit sets it back to 1. Player.Update passes Time.deltaTime=0 to relic Tick during pause. Enemies also freeze since they read Time.deltaTime.
+    Status: 2
+  - Category: UI
+    Name: Build RelicAcquirementScreenUI
+    Description: DONE - Fullscreen overlay with up to 3 RelicCardUI slots. Shows on UpgradeScreenState.OnOffersReady. After selection disables cards and shows Manage Board button. Wired via RelicUICoordinator.
+    Status: 2
+  - Category: UI
+    Name: Build RelicCardUI
+    Description: DONE - Shows icon rarity border name and level description. Bind(relic, callback) populates all visuals. Rarity colors configurable in inspector. SelectButton fires callback.
+    Status: 2
+  - Category: UI
+    Name: Build Manage Board button and inventory overlay flow
+    Description: DONE - After acquirement selection ShowManageBoardButton appears. Tapping opens InventoryOverlayUI. Close button calls UpgradeScreenState.Dismiss which resumes gameplay.
+    Status: 2
+  - Category: UI
+    Name: Build RelicBoardUI
+    Description: DONE - Creates Columns x Rows grid of RelicCellUI from prefab in a GridLayoutGroup. Subscribes to RelicBoard.OnCellChanged and OnBoardResized. Anchor cells show icon and level badge. Other occupied cells show rarity fill. ShowPlacementPreview and ClearPlacementPreview handle drag preview.
+    Status: 2
+  - Category: UI
+    Name: Build BagOfHoldingUI
+    Description: DONE - Subscribes to RelicBag.OnRelicAdded and OnRelicRemoved. Spawns and destroys RelicBagItemUI tiles reactively. Implements IDropHandler to accept board relics dragged back as unequip.
+    Status: 2
+  - Category: UI
+    Name: Build RelicDragHandler for touch drag and drop
+    Description: DONE - Singleton on root canvas. StartDragFromBag and StartDragFromBoard create ghost image following finger. UpdateDrag raycasts to board cells and shows green/red shape preview via RelicBoardUI. HandleBoardDrop calls PlaceOnBoard or TryMergeOnBoard. HandleBagDrop calls RemoveFromBoard. GhostPrefab and GhostSize configurable in inspector.
+    Status: 2
   - Category: Combat
     Name: Implement passive stat relic category
-    Description: Support relics that immediately modify player or weapon stats and persist those modifiers across levels.
+    Description: Relics that modify player stats when placed on board and remove modifiers when unequipped. Use RelicStatModifier entries in RelicLevelData.
     Status: 0
   - Category: Combat
     Name: Implement triggered relic category on events
-    Description: Support relic effects that proc from combat events with cooldown and chance handling.
+    Description: Relics that proc effects from combat events via IRelicBehavior.OnTrigger. Support cooldown stored on RelicInstance so unequip and re-equip preserves cooldown state.
     Status: 0
   - Category: Combat
     Name: Implement projectile spawning relic category
-    Description: Add relics that create and control projectiles including fire rate lifetime damage and targeting behavior.
+    Description: Relics that spawn projectiles on a tick interval. OnTick fires if cooldown elapsed. Already-spawned projectiles are independent GameObjects that resolve naturally when relic is unequipped. Cooldown on RelicInstance prevents spam exploit.
     Status: 0
   - Category: Combat
-    Name: Implement chain effect relic category explosion to lightning
-    Description: Implement multi stage effects where one trigger causes secondary and tertiary effects such as explosion then storm ticks.
+    Name: Implement chain effect relic category
+    Description: Multi stage effects where one trigger causes secondary and tertiary effects such as explosion followed by lightning storm ticks.
     Status: 0
   - Category: Performance
     Name: Add pooling for relic spawned projectiles and area effects
-    Description: Reuse projectile and area effect objects to reduce allocations and frame spikes during heavy combat.
+    Description: Reuse projectile and area effect objects from a pool to reduce allocations and frame spikes during heavy combat.
     Status: 0
   - Category: Content
     Name: Create first five relic assets for vertical slice
-    Description: Author a representative starter set of relics covering passive triggered projectile and chain archetypes.
+    Description: Author representative starter relics with defined shapes covering passive stat triggered projectile and chain archetypes. Shapes should include at least one 1x1 one 1x2 and one L-shaped relic.
     Status: 0
   - Category: Balancing
-    Name: Tune level curve and relic rarity weights
-    Description: Adjust progression speed and offer probabilities to keep power growth satisfying without runaway scaling.
+    Name: Tune XP curve and relic rarity weights
+    Description: Adjust level progression speed and offer probabilities to keep power growth satisfying without runaway scaling. Rarity weights configurable in RelicCatalogueSO or separate BalanceSO.
     Status: 0
   - Category: QA
-    Name: Add playmode tests for add upgrade and max level behavior
-    Description: Cover inventory and upgrade lifecycle cases so adding leveling and cap behavior remain stable over changes.
+    Name: Add playmode tests for bag board and merge behavior
+    Description: Cover AcquireToBag PlaceOnBoard RemoveFromBoard MergeOnBoard max level cap and shape conflict cases so lifecycle behavior stays stable.
     Status: 0
   - Category: QA
     Name: Validate chain relic interactions and event ordering

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccd5322d98469ab4ba080d68d5ac2ce0, type: 3}
+  m_Name: ShieldingWard
+  m_EditorClassIdentifier: Assembly-CSharp::Relic.RelicSO
+  Id: shielding-ward
+  DisplayName: Shielding Ward
+  Description: Increases max health for the bearer.
+  Icon: {fileID: 0}
+  Rarity: 0
+  MaxLevel: 3
+  Tags:
+  - passive
+  - defense
+  Levels:
+  - Description: +10 max health.
+    StatModifiers:
+    - Stat: 3
+      Operation: 0
+      Value: 10
+  - Description: +15 max health.
+    StatModifiers:
+    - Stat: 3
+      Operation: 0
+      Value: 15
+  - Description: +20 max health.
+    StatModifiers:
+    - Stat: 3
+      Operation: 0
+      Value: 20
+  ShapePerLevel:
+  - Cells:
+    - {x: 0, y: 0}
+  - Cells:
+    - {x: 0, y: 0}
+  - Cells:
+    - {x: 0, y: 0}

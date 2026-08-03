@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1533470550818893622, guid: 13a05fb4b25590a4fab5fd9d70b0ec30, type: 3}
+      propertyPath: RelicCatalogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 6d4ec3837f2047d90b9052f40f4585f5, type: 2}
     - target: {fileID: 8333878952538273858, guid: 13a05fb4b25590a4fab5fd9d70b0ec30, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

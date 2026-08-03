@@ -16,6 +16,8 @@ namespace Relic
 		public string[] Tags = Array.Empty<string>();
 		public List<RelicLevelData> Levels = new();
 
+		public readonly RelicShape[] ShapePerLevel = Array.Empty<RelicShape>();
+
 		public RelicLevelData GetLevelData(int level)
 		{
 			if (Levels.Count == 0)
@@ -23,6 +25,16 @@ namespace Relic
 
 			int index = Mathf.Clamp(level - 1, 0, Levels.Count - 1);
 			return Levels[index];
+		}
+
+		public RelicShape GetShape(int level)
+		{
+			if (ShapePerLevel == null || ShapePerLevel.Length == 0)
+				return RelicShape.Default;
+
+			int index = Mathf.Clamp(level - 1, 0, ShapePerLevel.Length - 1);
+			RelicShape shape = ShapePerLevel[index];
+			return shape is { IsValid: true } ? shape : RelicShape.Default;
 		}
 	}
 }
