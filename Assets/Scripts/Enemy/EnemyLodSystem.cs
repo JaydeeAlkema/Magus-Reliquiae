@@ -5,6 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace Enemy
 {
+	// Distance-based enemy simulation manager. Add one instance to the scene and point it at the player and WaveManager to control active/sleeping enemies.
 	[DefaultExecutionOrder(-100)]
 	public class EnemyLodSystem : MonoBehaviour
 	{
@@ -42,14 +43,14 @@ namespace Enemy
 
 		private void OnEnable()
 		{
-			Enemy.EnemyEnabled += Register;
-			Enemy.EnemyDisabled += Unregister;
+			Enemy.enemyEnabled += Register;
+			Enemy.enemyDisabled += Unregister;
 		}
 
 		private void OnDisable()
 		{
-			Enemy.EnemyEnabled -= Register;
-			Enemy.EnemyDisabled -= Unregister;
+			Enemy.enemyEnabled -= Register;
+			Enemy.enemyDisabled -= Unregister;
 		}
 
 		private void FixedUpdate()

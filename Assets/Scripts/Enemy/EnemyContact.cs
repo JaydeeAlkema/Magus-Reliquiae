@@ -2,6 +2,7 @@
 
 namespace Enemy
 {
+	// Contact helper for enemy push/separation logic. Owned by Enemy and configured from EnemyConfigSO; not meant to be added directly to a scene object.
 	public class EnemyContact
 	{
 		public Vector3 Position => _transform.position;

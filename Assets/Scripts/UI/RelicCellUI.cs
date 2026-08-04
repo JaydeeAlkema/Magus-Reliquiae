@@ -6,6 +6,12 @@ using UnityEngine.UI;
 
 namespace UI
 {
+	/// <summary>
+	/// Single relic-board cell view.
+	/// </summary>
+	/// <remarks>
+	/// Use this on the cell prefab and wire the background, icon, badge, and text references before handing it to <see cref="RelicBoardUI"/>.
+	/// </remarks>
 	[RequireComponent(typeof(Image))]
 	public class RelicCellUI : MonoBehaviour,
 		IDropHandler,
@@ -33,6 +39,9 @@ namespace UI
 		};
 
 
+		/// <summary>
+		/// Grid position for this cell.
+		/// </summary>
 		public Vector2Int GridPosition { get; private set; }
 
 		private RelicBoardUI _boardUI;
@@ -42,6 +51,11 @@ namespace UI
 		private Color _previewColor;
 
 
+		/// <summary>
+		/// Initializes the cell with a board position.
+		/// </summary>
+		/// <param name="gridPos">Grid position.</param>
+		/// <param name="boardUI">Owning board view.</param>
 		public void Initialize(Vector2Int gridPos, RelicBoardUI boardUI)
 		{
 			GridPosition = gridPos;
@@ -50,6 +64,11 @@ namespace UI
 		}
 
 
+		/// <summary>
+		/// Refreshes the cell visuals from a board state.
+		/// </summary>
+		/// <param name="occupant">Current relic occupant.</param>
+		/// <param name="isAnchor">Whether the cell is the anchor cell.</param>
 		public void Refresh(RelicInstance occupant, bool isAnchor)
 		{
 			_occupant = occupant;
@@ -58,6 +77,10 @@ namespace UI
 		}
 
 
+		/// <summary>
+		/// Marks the cell as a placement preview.
+		/// </summary>
+		/// <param name="isValid">Whether the preview should be green or red.</param>
 		public void SetPreview(bool isValid)
 		{
 			_inPreview = true;
@@ -65,6 +88,9 @@ namespace UI
 			UpdateVisuals();
 		}
 
+		/// <summary>
+		/// Clears preview visuals if the cell is previewed.
+		/// </summary>
 		public void ClearPreview()
 		{
 			if (!_inPreview) return;
@@ -128,22 +154,38 @@ namespace UI
 			return i >= 0 && i < RarityColors.Length ? RarityColors[i] : Color.grey;
 		}
 
+		/// <summary>
+		/// Handles drops from the drag system.
+		/// </summary>
+		/// <param name="eventData">Pointer event payload.</param>
 		public void OnDrop(PointerEventData eventData)
 		{
 			RelicDragHandler.Instance?.HandleBoardDrop(this);
 		}
 
+		/// <summary>
+		/// Starts dragging the anchored relic.
+		/// </summary>
+		/// <param name="eventData">Pointer event payload.</param>
 		public void OnBeginDrag(PointerEventData eventData)
 		{
 			if (_occupant == null || !_isAnchor) return;
 			RelicDragHandler.Instance?.StartDragFromBoard(_occupant, eventData);
 		}
 
+		/// <summary>
+		/// Updates drag feedback.
+		/// </summary>
+		/// <param name="eventData">Pointer event payload.</param>
 		public void OnDrag(PointerEventData eventData)
 		{
 			RelicDragHandler.Instance?.UpdateDrag(eventData);
 		}
 
+		/// <summary>
+		/// Ends drag feedback.
+		/// </summary>
+		/// <param name="eventData">Pointer event payload.</param>
 		public void OnEndDrag(PointerEventData eventData)
 		{
 			RelicDragHandler.Instance?.EndDrag(eventData);

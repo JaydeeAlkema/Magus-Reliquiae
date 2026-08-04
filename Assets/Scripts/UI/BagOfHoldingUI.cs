@@ -5,15 +5,31 @@ using UnityEngine.EventSystems;
 
 namespace UI
 {
+	/// <summary>
+	/// UI view for the player's relic bag.
+	/// </summary>
+	/// <remarks>
+	/// Assign the item prefab and container in the bag UI prefab, then initialize it with a <see cref="RelicBag"/>.
+	/// </remarks>
 	public class BagOfHoldingUI : MonoBehaviour, IDropHandler
 	{
+		/// <summary>
+		/// Prefab used for bag item entries.
+		/// </summary>
 		[SerializeField] private RelicBagItemUI ItemPrefab;
+		/// <summary>
+		/// Parent transform that receives instantiated entries.
+		/// </summary>
 		[SerializeField] private Transform ItemContainer;
 
 		private RelicBag _bag;
 		private readonly Dictionary<RelicInstance, RelicBagItemUI> _itemViews = new();
 
 
+		/// <summary>
+		/// Binds this view to a relic bag.
+		/// </summary>
+		/// <param name="bag">Bag to display.</param>
 		public void Initialize(RelicBag bag)
 		{
 			if (_bag != null)
@@ -49,6 +65,10 @@ namespace UI
 		}
 
 
+		/// <summary>
+		/// Handles relic bag drop interactions.
+		/// </summary>
+		/// <param name="eventData">Pointer event payload.</param>
 		public void OnDrop(PointerEventData eventData)
 		{
 			RelicDragHandler.Instance?.HandleBagDrop();
@@ -79,6 +99,11 @@ namespace UI
 			_itemViews[instance] = item;
 		}
 
+		/// <summary>
+		/// Returns the instantiated view for a relic instance.
+		/// </summary>
+		/// <param name="instance">Relic instance to look up.</param>
+		/// <returns>The matching item view, or null.</returns>
 		public RelicBagItemUI GetItemView(RelicInstance instance)
 		{
 			return _itemViews.GetValueOrDefault(instance);

@@ -4,10 +4,22 @@ using UnityEngine;
 
 namespace UI
 {
+	/// <summary>
+	/// Wires relic UI panels to the game and upgrade state.
+	/// </summary>
 	public class RelicUICoordinator : MonoBehaviour
 	{
+		/// <summary>
+		/// Relic offer screen.
+		/// </summary>
 		[SerializeField] private RelicAcquirementScreenUI AcquirementScreen;
+		/// <summary>
+		/// Inventory overlay screen.
+		/// </summary>
 		[SerializeField] private InventoryOverlayUI InventoryOverlay;
+		/// <summary>
+		/// Drag handler singleton reference.
+		/// </summary>
 		[SerializeField] private RelicDragHandler DragHandler;
 
 		private GameManager _gameManager;

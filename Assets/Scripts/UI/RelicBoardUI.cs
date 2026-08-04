@@ -4,15 +4,34 @@ using UnityEngine.UI;
 
 namespace UI
 {
+	/// <summary>
+	/// Grid view for relic placement.
+	/// </summary>
+	/// <remarks>
+	/// Attach this to the board root, assign the cell prefab and grid, then initialize it with a <see cref="RelicBoard"/>.
+	/// </remarks>
 	public class RelicBoardUI : MonoBehaviour
 	{
+		/// <summary>
+		/// Cell prefab used to build the board grid.
+		/// </summary>
 		[SerializeField] private RelicCellUI CellPrefab;
+		/// <summary>
+		/// Grid layout that hosts the cells.
+		/// </summary>
 		[SerializeField] private GridLayoutGroup Grid;
 
 		private RelicCellUI[,] _cells;
 
+		/// <summary>
+		/// Active relic board.
+		/// </summary>
 		public RelicBoard Board { get; private set; }
 
+		/// <summary>
+		/// Binds the board view to a relic board.
+		/// </summary>
+		/// <param name="board">Board to display.</param>
 		public void Initialize(RelicBoard board)
 		{
 			if (Board != null)
@@ -84,17 +103,34 @@ namespace UI
 			}
 		}
 
+		/// <summary>
+		/// Returns the cell at the given coordinates.
+		/// </summary>
+		/// <param name="x">Grid X coordinate.</param>
+		/// <param name="y">Grid Y coordinate.</param>
+		/// <returns>The matching cell, or null.</returns>
 		public RelicCellUI GetCell(int x, int y)
 		{
 			if (_cells == null || !Board.IsInBounds(x, y)) return null;
 			return _cells[x, y];
 		}
 
+		/// <summary>
+		/// Returns the cell at the given grid position.
+		/// </summary>
+		/// <param name="pos">Grid position.</param>
+		/// <returns>The matching cell, or null.</returns>
 		public RelicCellUI GetCell(Vector2Int pos)
 		{
 			return GetCell(pos.x, pos.y);
 		}
 
+		/// <summary>
+		/// Shows preview state for a potential relic placement.
+		/// </summary>
+		/// <param name="shape">Relic shape being previewed.</param>
+		/// <param name="anchor">Preview anchor position.</param>
+		/// <param name="isValid">Whether the placement is valid.</param>
 		public void ShowPlacementPreview(RelicShape shape, Vector2Int anchor, bool isValid)
 		{
 			ClearPlacementPreview();
@@ -107,6 +143,9 @@ namespace UI
 			}
 		}
 
+		/// <summary>
+		/// Clears all placement preview highlights.
+		/// </summary>
 		public void ClearPlacementPreview()
 		{
 			if (_cells == null) return;

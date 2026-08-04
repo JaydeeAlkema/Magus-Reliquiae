@@ -6,14 +6,32 @@ using UnityEngine.UI;
 
 namespace UI
 {
+	/// <summary>
+	/// Draggable relic entry shown inside the bag UI.
+	/// </summary>
+	/// <remarks>
+	/// Use this on the bag item prefab and wire icon, rarity border, and level text references.
+	/// </remarks>
 	[RequireComponent(typeof(Image))]
 	public class RelicBagItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 	{
+		/// <summary>
+		/// Display icon for the relic.
+		/// </summary>
 		[SerializeField] private Image IconImage;
+		/// <summary>
+		/// Border tinted by rarity.
+		/// </summary>
 		[SerializeField] private Image RarityBorderImage;
+		/// <summary>
+		/// Optional level label.
+		/// </summary>
 		[SerializeField] private TMP_Text LevelText;
 
 		[Header("Rarity Colors (index matches RelicRarity enum)")]
+		/// <summary>
+		/// Border colors indexed by rarity.
+		/// </summary>
 		[SerializeField] private Color[] RarityColors =
 		{
 			new(0.60f, 0.60f, 0.60f), // Common
@@ -22,8 +40,15 @@ namespace UI
 			new(1.00f, 0.60f, 0.10f), // Legendary
 		};
 
+		/// <summary>
+		/// Bound relic instance.
+		/// </summary>
 		public RelicInstance Instance { get; private set; }
 
+		/// <summary>
+		/// Binds a relic instance to the view.
+		/// </summary>
+		/// <param name="instance">Relic instance to display.</param>
 		public void Bind(RelicInstance instance)
 		{
 			Instance = instance;
@@ -45,16 +70,28 @@ namespace UI
 		}
 
 
+		/// <summary>
+		/// Begins dragging the relic from the bag.
+		/// </summary>
+		/// <param name="eventData">Pointer event payload.</param>
 		public void OnBeginDrag(PointerEventData eventData)
 		{
 			RelicDragHandler.Instance?.StartDragFromBag(Instance, eventData);
 		}
 
+		/// <summary>
+		/// Updates the drag interaction.
+		/// </summary>
+		/// <param name="eventData">Pointer event payload.</param>
 		public void OnDrag(PointerEventData eventData)
 		{
 			RelicDragHandler.Instance?.UpdateDrag(eventData);
 		}
 
+		/// <summary>
+		/// Ends the drag interaction.
+		/// </summary>
+		/// <param name="eventData">Pointer event payload.</param>
 		public void OnEndDrag(PointerEventData eventData)
 		{
 			RelicDragHandler.Instance?.EndDrag(eventData);

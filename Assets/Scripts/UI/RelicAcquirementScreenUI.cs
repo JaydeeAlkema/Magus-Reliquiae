@@ -7,9 +7,21 @@ using UnityEngine.UI;
 
 namespace UI
 {
+	/// <summary>
+	/// Relic reward selection screen.
+	/// </summary>
+	/// <remarks>
+	/// Put this on the acquirement screen prefab and wire the card array and manage-board button.
+	/// </remarks>
 	public class RelicAcquirementScreenUI : MonoBehaviour
 	{
+		/// <summary>
+		/// Card views used to present relic offers.
+		/// </summary>
 		[SerializeField] private RelicCardUI[] Cards;
+		/// <summary>
+		/// Optional button that opens the relic board.
+		/// </summary>
 		[SerializeField] private Button ManageBoardButton;
 
 		private UpgradeScreenState _upgradeState;
@@ -32,11 +44,19 @@ namespace UI
 			ManageBoardButton.onClick.AddListener(OnManageBoardTapped);
 		}
 
+		/// <summary>
+		/// Stores the active upgrade state.
+		/// </summary>
+		/// <param name="state">Upgrade state to connect.</param>
 		public void SetUpgradeState(UpgradeScreenState state)
 		{
 			_upgradeState = state;
 		}
 
+		/// <summary>
+		/// Shows relic offers in the card slots.
+		/// </summary>
+		/// <param name="offers">Relics to present.</param>
 		public void Show(IReadOnlyList<RelicSO> offers)
 		{
 			this.gameObject.SetActive(true);
@@ -61,11 +81,18 @@ namespace UI
 			}
 		}
 
+		/// <summary>
+		/// Hides the offer screen.
+		/// </summary>
 		public void Hide()
 		{
 			this.gameObject.SetActive(false);
 		}
 
+		/// <summary>
+		/// Shows the manage-board button and stores its callback.
+		/// </summary>
+		/// <param name="onTapped">Callback for the button.</param>
 		public void ShowManageBoardButton(Action onTapped)
 		{
 			_onManageBoardTapped = onTapped;

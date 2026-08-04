@@ -2,13 +2,32 @@
 
 namespace StateMachine
 {
+	/// <summary>
+	/// Generic state machine used by the game flow.
+	/// </summary>
+	/// <remarks>
+	/// Initialize it with a starting <see cref="State"/>, then call <see cref="Update"/> from the owning system each frame.
+	/// </remarks>
 	public class StateMachine
 	{
+		/// <summary>
+		/// Fired whenever the active state changes.
+		/// </summary>
 		public event Action<State, State> onStateChange;
 
+		/// <summary>
+		/// Current active state.
+		/// </summary>
 		public State CurrentState { get; private set; }
+		/// <summary>
+		/// True after <see cref="Setup"/> has been called successfully.
+		/// </summary>
 		public bool IsReady { get; private set; }
 
+		/// <summary>
+		/// Starts the state machine with the given state.
+		/// </summary>
+		/// <param name="startState">Initial state.</param>
 		public void Setup(State startState)
 		{
 
@@ -19,6 +38,9 @@ namespace StateMachine
 			IsReady = true;
 		}
 
+		/// <summary>
+		/// Advances the active state and performs transitions when needed.
+		/// </summary>
 		public void Update()
 		{
 			if (!IsReady || CurrentState == null)

@@ -3843,7 +3843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.RelicDragHandler
   RootCanvas: {fileID: 354943667}
-  GhostPrefab: {fileID: 1611234256}
+  GhostPrefab: {fileID: 5000000000000000001, guid: 3f0f10f7e0d74a7ca8f6f8c5d20d7f44, type: 3}
   GhostSize: {x: 80, y: 80}
 --- !u!1 &1618944252
 GameObject:

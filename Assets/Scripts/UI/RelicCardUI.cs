@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
+	// Offer-card view for a single relic. Use it on the relic card prefab and wire the icon, texts, border, and select button references.
 	public class RelicCardUI : MonoBehaviour
 	{
 		[SerializeField] private Image IconImage;

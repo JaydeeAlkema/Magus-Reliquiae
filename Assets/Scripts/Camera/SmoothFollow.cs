@@ -2,6 +2,13 @@
 
 namespace Camera
 {
+	/// <summary>
+	/// Smoothly follows a target transform with a configurable offset.
+	/// </summary>
+	/// <remarks>
+	/// Attach this to the camera object, assign a target, and tune <see cref="SmoothSpeed"/> and
+	/// <see cref="Offset"/> in the inspector.
+	/// </remarks>
 	public class SmoothFollow : MonoBehaviour
 	{
 		[Header("Camera Follow Settings")]

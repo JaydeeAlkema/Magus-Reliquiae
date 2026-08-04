@@ -3,6 +3,12 @@ using UnityEngine;
 
 namespace Waves
 {
+	/// <summary>
+	/// World-space region that provides enemy spawn points.
+	/// </summary>
+	/// <remarks>
+	/// Place this on a scene object, size the spawn area in the inspector, and optionally anchor it to the camera edge.
+	/// </remarks>
 	public class WaveSpawnArea : MonoBehaviour
 	{
 		private enum WaveSpawnCameraSide
@@ -41,8 +47,14 @@ namespace Waves
 		[SerializeField] private Vector2 CameraOffset;
 		[SerializeField] private UnityEngine.Camera TargetCamera;
 
+		/// <summary>
+		/// Returns the configured spawn area type.
+		/// </summary>
 		public WaveSpawnAreaType WaveSpawnAreaType => WaveAreaType;
 
+		/// <summary>
+		/// Keeps the spawn area anchored to the camera when enabled.
+		/// </summary>
 		private void LateUpdate()
 		{
 			if (!StickToCamera)
@@ -51,6 +63,10 @@ namespace Waves
 			StickAreaToCameraEdge();
 		}
 
+		/// <summary>
+		/// Distributes enemies across the area using generated points.
+		/// </summary>
+		/// <param name="enemies">Enemy instances to place.</param>
 		public void DistributeEnemies(List<Enemy.Enemy> enemies)
 		{
 			if (enemies == null || enemies.Count == 0)
@@ -60,6 +76,11 @@ namespace Waves
 			PlaceEnemies(enemies, points);
 		}
 
+		/// <summary>
+		/// Generates spawn points inside the area.
+		/// </summary>
+		/// <param name="count">Number of points to generate.</param>
+		/// <returns>List of world-space spawn points.</returns>
 		public List<Vector2> GetSpawnPoints(int count)
 		{
 			List<Vector2> points = new(count);
@@ -102,6 +123,10 @@ namespace Waves
 			return points;
 		}
 
+		/// <summary>
+		/// Returns a single random point inside the area.
+		/// </summary>
+		/// <returns>Random world-space point.</returns>
 		public Vector2 GetRandomPoint()
 		{
 			Vector2 center = this.transform.position;
@@ -111,6 +136,11 @@ namespace Waves
 			return RandomPointInArea(center, halfExtents);
 		}
 
+		/// <summary>
+		/// Places enemies at the provided points.
+		/// </summary>
+		/// <param name="enemies">Enemy instances to place.</param>
+		/// <param name="points">Spawn locations in matching order.</param>
 		public void PlaceEnemies(List<Enemy.Enemy> enemies, List<Vector2> points)
 		{
 			for (int i = 0; i < enemies.Count; i++)

@@ -15,3 +15,4 @@ MonoBehaviour:
   MoveSpeed: 0.2
   CollisionRadius: 0.5
   Damage: 1
+  XpReward: 10

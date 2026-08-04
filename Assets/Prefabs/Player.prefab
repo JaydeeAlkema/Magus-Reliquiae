@@ -198,6 +198,21 @@ MonoBehaviour:
   CastBufferCapacity: 8
   PushRadius: 0.4
   MaxEnemyPushSpeed: 3
+  BoardColumns: 4
+  BoardRows: 5
+  StartingRelic: {fileID: 11400000, guid: c506c843673b4df9b2e84884f0db93e5, type: 2}
+  StartingRelicAnchor: {x: 0, y: 0}
+  LevelXpThresholds:
+  - 100
+  - 250
+  - 450
+  - 700
+  - 1000
+  - 1400
+  - 1900
+  - 2500
+  - 3200
+  - 4000
 --- !u!50 &1520267091003934272
 Rigidbody2D:
   serializedVersion: 5

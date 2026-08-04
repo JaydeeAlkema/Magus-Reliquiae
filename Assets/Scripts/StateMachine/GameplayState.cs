@@ -5,6 +5,12 @@ using UnityEngine;
 
 namespace StateMachine
 {
+	/// <summary>
+	/// Primary in-game state.
+	/// </summary>
+	/// <remarks>
+	/// It owns gameplay setup, updates, and the transition to upgrade screens.
+	/// </remarks>
 	public class GameplayState : State
 	{
 		private const int OFFER_COUNT = 3;
@@ -13,14 +19,27 @@ namespace StateMachine
 		private Player.Player _player;
 		private bool _levelUpPending;
 
+		/// <summary>
+		/// True when the state is finished.
+		/// </summary>
 		public override bool IsDone { get; protected set; }
+		/// <summary>
+		/// The next state after a level-up offer is ready.
+		/// </summary>
 		public override State NextState { get; protected set; }
 
+		/// <summary>
+		/// Creates the gameplay state.
+		/// </summary>
+		/// <param name="context">Shared game context.</param>
 		public GameplayState(GameContext context)
 		{
 			_context = context;
 		}
 
+		/// <summary>
+		/// Binds the player and enables gameplay-specific hooks.
+		/// </summary>
 		public override void OnEnter()
 		{
 			IsDone = false;
@@ -34,7 +53,7 @@ namespace StateMachine
 				_context.Player = _player;
 			}
 
-			if (!_player)
+			if (_player)
 			{
 				_player.XP.onLevelUp += OnLevelUp;
 				_player.Relics.IsInteractionLocked = true;
@@ -47,6 +66,9 @@ namespace StateMachine
 			StateMachineLog.Log("Entering Gameplay State");
 		}
 
+		/// <summary>
+		/// Cleans up gameplay hooks.
+		/// </summary>
 		public override void OnExit()
 		{
 			if (_player)
@@ -55,6 +77,9 @@ namespace StateMachine
 			StateMachineLog.Log("Exiting Gameplay State");
 		}
 
+		/// <summary>
+		/// Waits for a pending level-up transition.
+		/// </summary>
 		public override void Update()
 		{
 			if (!_levelUpPending || !_player) return;
@@ -68,6 +93,10 @@ namespace StateMachine
 			IsDone = true;
 		}
 
+		/// <summary>
+		/// Defers the upgrade transition until the next safe update point.
+		/// </summary>
+		/// <param name="newLevel">New player level.</param>
 		private void OnLevelUp(int newLevel)
 		{
 			// Defer transition to Update so it happens at a safe point in the frame

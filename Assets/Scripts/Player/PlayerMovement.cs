@@ -3,6 +3,12 @@ using UnityEngine;
 
 namespace Player
 {
+	/// <summary>
+	/// Pure movement controller owned by <see cref="Player"/>.
+	/// </summary>
+	/// <remarks>
+	/// Keep it constructed by the player prefab and configure collision settings through the owning component.
+	/// </remarks>
 	public class PlayerMovement
 	{
 		private readonly List<RaycastHit2D> _hits = new();
@@ -13,6 +19,14 @@ namespace Player
 		private int _maxSlideIterations;
 		private Vector2 _pendingMovement;
 
+		/// <summary>
+		/// Configures movement collision and cast settings.
+		/// </summary>
+		/// <param name="rigidbody">Player rigidbody.</param>
+		/// <param name="contactFilter">Contact filter used for casts.</param>
+		/// <param name="skinWidth">Small padding kept away from walls.</param>
+		/// <param name="maxSlideIterations">Maximum slide attempts per move.</param>
+		/// <param name="castBufferCapacity">Initial cast hit buffer capacity.</param>
 		public void Setup(
 			Rigidbody2D rigidbody,
 			ContactFilter2D contactFilter,
@@ -30,11 +44,19 @@ namespace Player
 				_hits.Capacity = bufferCapacity;
 		}
 
+		/// <summary>
+		/// Queues desired movement for the next physics step.
+		/// </summary>
+		/// <param name="desiredDelta">Desired movement delta.</param>
 		public void AddInput(Vector2 desiredDelta)
 		{
 			_pendingMovement += desiredDelta;
 		}
 
+		/// <summary>
+		/// Returns and clears the queued input movement.
+		/// </summary>
+		/// <returns>Queued movement delta.</returns>
 		public Vector2 ConsumePendingMovement()
 		{
 			Vector2 pending = _pendingMovement;
@@ -42,6 +64,11 @@ namespace Player
 			return pending;
 		}
 
+		/// <summary>
+		/// Applies collision-aware movement.
+		/// </summary>
+		/// <param name="movement">Movement to attempt.</param>
+		/// <returns>The amount actually moved.</returns>
 		public Vector2 Move(Vector2 movement)
 		{
 			Vector2 remaining = movement;

@@ -5,6 +5,12 @@ using UnityEngine.Pool;
 
 namespace Waves
 {
+	/// <summary>
+	/// Coordinates wave timing, enemy pooling, and enemy spawning.
+	/// </summary>
+	/// <remarks>
+	/// Assign wave assets, spawn areas, and enemy prefabs in the inspector; the manager handles the rest at runtime.
+	/// </remarks>
 	public class WaveManager : MonoBehaviour
 	{
 		private const int DEFAULT_POOL_CAPACITY = 128;
@@ -23,6 +29,9 @@ namespace Waves
 		[SerializeField] private List<Enemy.Enemy> EnemiesToPrewarm;
 		[SerializeField] private int PrewarmCountPerType = 10;
 
+		/// <summary>
+		/// Active spawn areas used by the current wave setup.
+		/// </summary>
 		public IReadOnlyList<WaveSpawnArea> SpawnAreas => WaveSpawnAreas;
 
 		private List<WaveSO> _wavesCopy = new();

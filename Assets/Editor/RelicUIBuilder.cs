@@ -605,7 +605,7 @@ public static class RelicUIBuilder
 	}
 }
 
-// Extension method to avoid duplicate AddComponent calls
+// Tiny editor helper so the builder can reuse components without duplicating them.
 public static class GameObjectExtensions
 {
 	public static T GetOrAddComponent<T>(this GameObject go) where T : Component

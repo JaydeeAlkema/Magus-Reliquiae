@@ -6,6 +6,12 @@ using UnityEngine;
 
 namespace Editor
 {
+	/// <summary>
+	/// Editor window for managing <see cref="TodoBoardSO"/> assets.
+	/// </summary>
+	/// <remarks>
+	/// Open it from <c>Tools/Todo Board</c> to create boards, add tasks, and review task status.
+	/// </remarks>
 	public class TodoBoardWindow : EditorWindow
 	{
 		private const float CATEGORY_COLUMN_WIDTH = 170f;
@@ -51,12 +57,18 @@ namespace Editor
 		private readonly Dictionary<string, bool> _categoryFoldouts = new();
 		private readonly Dictionary<string, bool> _taskFoldouts = new();
 
+		/// <summary>
+		/// Opens the todo board window.
+		/// </summary>
 		[MenuItem("Tools/Todo Board")]
 		public static void Open()
 		{
 			GetWindow<TodoBoardWindow>("Todo Board");
 		}
 
+		/// <summary>
+		/// Draws the window contents.
+		/// </summary>
 		private void OnGUI()
 		{
 			DrawToolbar();
@@ -402,6 +414,9 @@ namespace Editor
 			return false;
 		}
 
+		/// <summary>
+		/// Creates a new todo board asset in the project.
+		/// </summary>
 		private void CreateBoardAsset()
 		{
 			string path = EditorUtility.SaveFilePanelInProject(

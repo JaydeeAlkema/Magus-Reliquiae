@@ -3,21 +3,41 @@ using System.Collections.Generic;
 
 namespace PlayerStats
 {
+	/// <summary>
+	/// Runtime stat container for base values and active modifiers.
+	/// </summary>
+	/// <remarks>
+	/// Set base stats first, then add or remove modifiers by source ID to drive derived values.
+	/// </remarks>
 	public sealed class PlayerStatsModel
 	{
 		private readonly Dictionary<PlayerStatType, float> _baseValues = new();
 		private readonly Dictionary<PlayerStatType, List<StatModifier>> _modifiers = new();
 
+		/// <summary>
+		/// Sets the unmodified value for a stat.
+		/// </summary>
+		/// <param name="stat">Stat to update.</param>
+		/// <param name="value">Base value.</param>
 		public void SetBaseValue(PlayerStatType stat, float value)
 		{
 			_baseValues[stat] = value;
 		}
 
+		/// <summary>
+		/// Reads the stored base value for a stat.
+		/// </summary>
+		/// <param name="stat">Stat to query.</param>
+		/// <returns>The stored base value, or zero if unset.</returns>
 		public float GetBaseValue(PlayerStatType stat)
 		{
 			return _baseValues.GetValueOrDefault(stat, 0f);
 		}
 
+		/// <summary>
+		/// Adds a modifier to the tracked list for its stat.
+		/// </summary>
+		/// <param name="modifier">Modifier to add.</param>
 		public void AddModifier(StatModifier modifier)
 		{
 			if (!_modifiers.TryGetValue(modifier.Stat, out List<StatModifier> list))
@@ -29,6 +49,11 @@ namespace PlayerStats
 			list.Add(modifier);
 		}
 
+		/// <summary>
+		/// Removes all modifiers from a source ID.
+		/// </summary>
+		/// <param name="sourceId">Source identifier to match.</param>
+		/// <returns>Number of removed modifiers.</returns>
 		public int RemoveModifiersBySource(string sourceId)
 		{
 			int removedCount = 0;
@@ -48,6 +73,11 @@ namespace PlayerStats
 			return removedCount;
 		}
 
+		/// <summary>
+		/// Computes the final value for a stat.
+		/// </summary>
+		/// <param name="stat">Stat to compute.</param>
+		/// <returns>Base value after additive and multiplicative modifiers.</returns>
 		public float GetValue(PlayerStatType stat)
 		{
 			float baseValue = GetBaseValue(stat);

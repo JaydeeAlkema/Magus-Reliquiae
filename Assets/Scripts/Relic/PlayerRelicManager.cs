@@ -16,6 +16,12 @@ namespace Relic
 		AlreadyMaxLevel = 6,
 	}
 
+	/// <summary>
+	/// Owns the player's relic inventory and board model.
+	/// </summary>
+	/// <remarks>
+	/// Construct it from <see cref="global::Player.Player"/> and use it for acquire, place, merge, and removal flows.
+	/// </remarks>
 	public sealed class PlayerRelicManager
 	{
 		private readonly RelicRuntimeContext _runtimeContext;
@@ -23,27 +29,62 @@ namespace Relic
 
 		private readonly List<RelicInstance> _tickBuffer = new();
 
+		/// <summary>
+		/// Inventory bag for unequipped relics.
+		/// </summary>
 		public RelicBag Bag { get; }
+		/// <summary>
+		/// Board used for equipped relics.
+		/// </summary>
 		public RelicBoard Board { get; }
 
+		/// <summary>
+		/// Blocks interaction when true.
+		/// </summary>
 		public bool IsInteractionLocked { get; set; } = true;
 
+		/// <summary>
+		/// Fired when a relic is acquired.
+		/// </summary>
 		public event Action<RelicInstance> onRelicAcquired;
+		/// <summary>
+		/// Fired when a relic is placed on the board.
+		/// </summary>
 		public event Action<RelicInstance> onRelicPlaced;
+		/// <summary>
+		/// Fired when a relic is removed from the board.
+		/// </summary>
 		public event Action<RelicInstance> onRelicUnequipped;
+		/// <summary>
+		/// Fired when a merge completes.
+		/// </summary>
 		public event Action<RelicInstance, int> onRelicMerged;
 
-		public PlayerRelicManager(PlayerStatsModel playerStats, int boardColumns, int boardRows)
+		/// <summary>
+		/// Creates the player relic manager.
+		/// </summary>
+		/// <param name="playerStats">Player stats model.</param>
+		/// <param name="boardColumns">Board width.</param>
+		/// <param name="boardRows">Board height.</param>
+		/// <param name="owner">Optional owning player.</param>
+		public PlayerRelicManager(PlayerStatsModel playerStats, int boardColumns, int boardRows, global::Player.Player owner = null)
 		{
 			Bag = new RelicBag();
 			Board = new RelicBoard(boardColumns, boardRows);
-			_runtimeContext = new RelicRuntimeContext(playerStats);
+			_runtimeContext = new RelicRuntimeContext(playerStats, owner);
 		}
 
-		public void AcquireToBag(RelicSO definition, IRelicBehavior behavior = null)
+		/// <summary>
+		/// Acquires a relic into the bag.
+		/// </summary>
+		/// <param name="definition">Relic definition.</param>
+		/// <param name="behavior">Optional behavior override.</param>
+		/// <returns>The acquired instance.</returns>
+		public RelicInstance AcquireToBag(RelicSO definition, IRelicBehavior behavior = null)
 		{
 			if (definition == null) throw new ArgumentNullException(nameof(definition));
 
+			behavior ??= definition.CreateBehavior();
 			RelicInstance instance = new(definition);
 			if (behavior != null)
 				_behaviors[instance] = behavior;
@@ -51,8 +92,15 @@ namespace Relic
 			Bag.Add(instance);
 			behavior?.OnAcquired(instance, _runtimeContext);
 			onRelicAcquired?.Invoke(instance);
+			return instance;
 		}
 
+		/// <summary>
+		/// Places a bag relic onto the board.
+		/// </summary>
+		/// <param name="instance">Relic instance to place.</param>
+		/// <param name="anchor">Board anchor.</param>
+		/// <returns>True when placement succeeded.</returns>
 		public bool PlaceOnBoard(RelicInstance instance, Vector2Int anchor)
 		{
 			if (IsInteractionLocked) return false;
@@ -68,6 +116,11 @@ namespace Relic
 			return true;
 		}
 
+		/// <summary>
+		/// Removes a placed relic back to the bag.
+		/// </summary>
+		/// <param name="instance">Relic instance to remove.</param>
+		/// <returns>True when removal succeeded.</returns>
 		public bool RemoveFromBoard(RelicInstance instance)
 		{
 			if (IsInteractionLocked) return false;
@@ -84,6 +137,12 @@ namespace Relic
 			return true;
 		}
 
+		/// <summary>
+		/// Attempts to merge a bag relic into a board relic.
+		/// </summary>
+		/// <param name="bagRelic">Relic being consumed from the bag.</param>
+		/// <param name="boardRelic">Relic already on the board.</param>
+		/// <returns>The merge result.</returns>
 		public MergeResult TryMergeOnBoard(RelicInstance bagRelic, RelicInstance boardRelic)
 		{
 			if (IsInteractionLocked) return MergeResult.InvalidInput;
@@ -123,6 +182,10 @@ namespace Relic
 		}
 
 
+		/// <summary>
+		/// Ticks all board relic behaviors.
+		/// </summary>
+		/// <param name="deltaTime">Frame delta time.</param>
 		public void Tick(float deltaTime)
 		{
 			_tickBuffer.Clear();
@@ -134,6 +197,10 @@ namespace Relic
 			}
 		}
 
+		/// <summary>
+		/// Publishes a relic trigger to all active board relics.
+		/// </summary>
+		/// <param name="trigger">Trigger payload.</param>
 		public void Publish(RelicTrigger trigger)
 		{
 			_tickBuffer.Clear();
@@ -145,6 +212,11 @@ namespace Relic
 			}
 		}
 
+		/// <summary>
+		/// Expands the board size.
+		/// </summary>
+		/// <param name="newColumns">New width.</param>
+		/// <param name="newRows">New height.</param>
 		public void UnlockBoardSize(int newColumns, int newRows)
 		{
 			Board.Resize(newColumns, newRows);
