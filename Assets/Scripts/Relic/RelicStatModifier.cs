@@ -4,21 +4,21 @@ using PlayerStats;
 namespace Relic
 {
 	/// <summary>
-	/// Serializable stat modifier used by relic level data.
+	///     Serializable stat modifier used by relic level data.
 	/// </summary>
 	[Serializable]
 	public struct RelicStatModifier
 	{
 		/// <summary>
-		/// Target stat.
+		///     Target stat.
 		/// </summary>
 		public PlayerStatType Stat;
 		/// <summary>
-		/// Modifier operation.
+		///     Modifier operation.
 		/// </summary>
 		public StatModifierOperation Operation;
 		/// <summary>
-		/// Modifier amount.
+		///     Modifier amount.
 		/// </summary>
 		public float Value;
 	}

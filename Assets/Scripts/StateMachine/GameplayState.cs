@@ -6,10 +6,10 @@ using UnityEngine;
 namespace StateMachine
 {
 	/// <summary>
-	/// Primary in-game state.
+	///     Primary in-game state.
 	/// </summary>
 	/// <remarks>
-	/// It owns gameplay setup, updates, and the transition to upgrade screens.
+	///     It owns gameplay setup, updates, and the transition to upgrade screens.
 	/// </remarks>
 	public class GameplayState : State
 	{
@@ -20,16 +20,16 @@ namespace StateMachine
 		private bool _levelUpPending;
 
 		/// <summary>
-		/// True when the state is finished.
+		///     True when the state is finished.
 		/// </summary>
 		public override bool IsDone { get; protected set; }
 		/// <summary>
-		/// The next state after a level-up offer is ready.
+		///     The next state after a level-up offer is ready.
 		/// </summary>
 		public override State NextState { get; protected set; }
 
 		/// <summary>
-		/// Creates the gameplay state.
+		///     Creates the gameplay state.
 		/// </summary>
 		/// <param name="context">Shared game context.</param>
 		public GameplayState(GameContext context)
@@ -38,7 +38,7 @@ namespace StateMachine
 		}
 
 		/// <summary>
-		/// Binds the player and enables gameplay-specific hooks.
+		///     Binds the player and enables gameplay-specific hooks.
 		/// </summary>
 		public override void OnEnter()
 		{
@@ -67,7 +67,7 @@ namespace StateMachine
 		}
 
 		/// <summary>
-		/// Cleans up gameplay hooks.
+		///     Cleans up gameplay hooks.
 		/// </summary>
 		public override void OnExit()
 		{
@@ -78,7 +78,7 @@ namespace StateMachine
 		}
 
 		/// <summary>
-		/// Waits for a pending level-up transition.
+		///     Waits for a pending level-up transition.
 		/// </summary>
 		public override void Update()
 		{
@@ -94,7 +94,7 @@ namespace StateMachine
 		}
 
 		/// <summary>
-		/// Defers the upgrade transition until the next safe update point.
+		///     Defers the upgrade transition until the next safe update point.
 		/// </summary>
 		/// <param name="newLevel">New player level.</param>
 		private void OnLevelUp(int newLevel)

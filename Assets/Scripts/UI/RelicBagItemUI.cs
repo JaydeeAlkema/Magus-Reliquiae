@@ -7,24 +7,24 @@ using UnityEngine.UI;
 namespace UI
 {
 	/// <summary>
-	/// Draggable relic entry shown inside the bag UI.
+	///     Draggable relic entry shown inside the bag UI.
 	/// </summary>
 	/// <remarks>
-	/// Use this on the bag item prefab and wire icon, rarity border, and level text references.
+	///     Use this on the bag item prefab and wire icon, rarity border, and level text references.
 	/// </remarks>
 	[RequireComponent(typeof(Image))]
 	public class RelicBagItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 	{
 		/// <summary>
-		/// Display icon for the relic.
+		///     Display icon for the relic.
 		/// </summary>
 		[SerializeField] private Image IconImage;
 		/// <summary>
-		/// Border tinted by rarity.
+		///     Border tinted by rarity.
 		/// </summary>
 		[SerializeField] private Image RarityBorderImage;
 		/// <summary>
-		/// Optional level label.
+		///     Optional level label.
 		/// </summary>
 		[SerializeField] private TMP_Text LevelText;
 
@@ -41,12 +41,12 @@ namespace UI
 		};
 
 		/// <summary>
-		/// Bound relic instance.
+		///     Bound relic instance.
 		/// </summary>
 		public RelicInstance Instance { get; private set; }
 
 		/// <summary>
-		/// Binds a relic instance to the view.
+		///     Binds a relic instance to the view.
 		/// </summary>
 		/// <param name="instance">Relic instance to display.</param>
 		public void Bind(RelicInstance instance)
@@ -71,7 +71,7 @@ namespace UI
 
 
 		/// <summary>
-		/// Begins dragging the relic from the bag.
+		///     Begins dragging the relic from the bag.
 		/// </summary>
 		/// <param name="eventData">Pointer event payload.</param>
 		public void OnBeginDrag(PointerEventData eventData)
@@ -80,7 +80,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Updates the drag interaction.
+		///     Updates the drag interaction.
 		/// </summary>
 		/// <param name="eventData">Pointer event payload.</param>
 		public void OnDrag(PointerEventData eventData)
@@ -89,7 +89,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Ends the drag interaction.
+		///     Ends the drag interaction.
 		/// </summary>
 		/// <param name="eventData">Pointer event payload.</param>
 		public void OnEndDrag(PointerEventData eventData)

@@ -6,10 +6,10 @@ using UnityEngine.Pool;
 namespace Waves
 {
 	/// <summary>
-	/// Coordinates wave timing, enemy pooling, and enemy spawning.
+	///     Coordinates wave timing, enemy pooling, and enemy spawning.
 	/// </summary>
 	/// <remarks>
-	/// Assign wave assets, spawn areas, and enemy prefabs in the inspector; the manager handles the rest at runtime.
+	///     Assign wave assets, spawn areas, and enemy prefabs in the inspector; the manager handles the rest at runtime.
 	/// </remarks>
 	public class WaveManager : MonoBehaviour
 	{
@@ -30,7 +30,7 @@ namespace Waves
 		[SerializeField] private int PrewarmCountPerType = 10;
 
 		/// <summary>
-		/// Active spawn areas used by the current wave setup.
+		///     Active spawn areas used by the current wave setup.
 		/// </summary>
 		public IReadOnlyList<WaveSpawnArea> SpawnAreas => WaveSpawnAreas;
 

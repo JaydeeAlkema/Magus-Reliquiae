@@ -3,11 +3,11 @@
 namespace Health
 {
 	/// <summary>
-	/// World-space health bar controller.
+	///     World-space health bar controller.
 	/// </summary>
 	/// <remarks>
-	/// Attach this to the health bar prefab, assign the fill and background sprite renderers, then call
-	/// <see cref="Initialize"/> before using <see cref="SetHealth"/> or <see cref="SetHealthPercent"/>.
+	///     Attach this to the health bar prefab, assign the fill and background sprite renderers, then call
+	///     <see cref="Initialize" /> before using <see cref="SetHealth" /> or <see cref="SetHealthPercent" />.
 	/// </remarks>
 	public class HealthBar : MonoBehaviour
 	{
@@ -25,7 +25,7 @@ namespace Health
 		}
 
 		/// <summary>
-		/// Assigns the bar sprites and rebuilds the cached width/position values used for scaling.
+		///     Assigns the bar sprites and rebuilds the cached width/position values used for scaling.
 		/// </summary>
 		/// <param name="fillSprite">The sprite renderer that visually represents remaining health.</param>
 		/// <param name="backgroundSprite">The sprite renderer used as the bar backdrop.</param>
@@ -50,7 +50,7 @@ namespace Health
 		}
 
 		/// <summary>
-		/// Sets the bar from a current and max health pair.
+		///     Sets the bar from a current and max health pair.
 		/// </summary>
 		/// <param name="current">Current health value.</param>
 		/// <param name="max">Maximum health value.</param>
@@ -61,7 +61,7 @@ namespace Health
 		}
 
 		/// <summary>
-		/// Sets the bar using a 0-1 percentage.
+		///     Sets the bar using a 0-1 percentage.
 		/// </summary>
 		/// <param name="percent">Health percentage, clamped to the 0-1 range.</param>
 		public void SetHealthPercent(float percent)

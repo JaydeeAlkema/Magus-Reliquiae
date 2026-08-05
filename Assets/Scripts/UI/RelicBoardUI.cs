@@ -5,31 +5,32 @@ using UnityEngine.UI;
 namespace UI
 {
 	/// <summary>
-	/// Grid view for relic placement.
+	///     Grid view for relic placement.
 	/// </summary>
 	/// <remarks>
-	/// Attach this to the board root, assign the cell prefab and grid, then initialize it with a <see cref="RelicBoard"/>.
+	///     Attach this to the board root, assign the cell prefab and grid, then initialize it with a <see cref="RelicBoard" />
+	///     .
 	/// </remarks>
 	public class RelicBoardUI : MonoBehaviour
 	{
 		/// <summary>
-		/// Cell prefab used to build the board grid.
+		///     Cell prefab used to build the board grid.
 		/// </summary>
 		[SerializeField] private RelicCellUI CellPrefab;
 		/// <summary>
-		/// Grid layout that hosts the cells.
+		///     Grid layout that hosts the cells.
 		/// </summary>
 		[SerializeField] private GridLayoutGroup Grid;
 
 		private RelicCellUI[,] _cells;
 
 		/// <summary>
-		/// Active relic board.
+		///     Active relic board.
 		/// </summary>
 		public RelicBoard Board { get; private set; }
 
 		/// <summary>
-		/// Binds the board view to a relic board.
+		///     Binds the board view to a relic board.
 		/// </summary>
 		/// <param name="board">Board to display.</param>
 		public void Initialize(RelicBoard board)
@@ -104,7 +105,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Returns the cell at the given coordinates.
+		///     Returns the cell at the given coordinates.
 		/// </summary>
 		/// <param name="x">Grid X coordinate.</param>
 		/// <param name="y">Grid Y coordinate.</param>
@@ -116,7 +117,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Returns the cell at the given grid position.
+		///     Returns the cell at the given grid position.
 		/// </summary>
 		/// <param name="pos">Grid position.</param>
 		/// <returns>The matching cell, or null.</returns>
@@ -126,7 +127,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Shows preview state for a potential relic placement.
+		///     Shows preview state for a potential relic placement.
 		/// </summary>
 		/// <param name="shape">Relic shape being previewed.</param>
 		/// <param name="anchor">Preview anchor position.</param>
@@ -144,7 +145,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Clears all placement preview highlights.
+		///     Clears all placement preview highlights.
 		/// </summary>
 		public void ClearPlacementPreview()
 		{

@@ -4,10 +4,10 @@ using UnityEngine;
 namespace Player
 {
 	/// <summary>
-	/// Enemy pushback helper owned by <see cref="Player"/>.
+	///     Enemy pushback helper owned by <see cref="Player" />.
 	/// </summary>
 	/// <remarks>
-	/// Create it from the player prefab and keep its tuning synced with the player's stat values.
+	///     Create it from the player prefab and keep its tuning synced with the player's stat values.
 	/// </remarks>
 	public class PlayerEnemyPush
 	{
@@ -15,7 +15,7 @@ namespace Player
 		private float _maxEnemyPushSpeed;
 
 		/// <summary>
-		/// Sets the initial pushback tuning.
+		///     Sets the initial pushback tuning.
 		/// </summary>
 		/// <param name="pushRadius">Player push radius.</param>
 		/// <param name="maxEnemyPushSpeed">Maximum enemy push speed.</param>
@@ -26,7 +26,7 @@ namespace Player
 		}
 
 		/// <summary>
-		/// Updates the runtime tuning values.
+		///     Updates the runtime tuning values.
 		/// </summary>
 		/// <param name="pushRadius">Player push radius.</param>
 		/// <param name="maxEnemyPushSpeed">Maximum enemy push speed.</param>
@@ -37,7 +37,7 @@ namespace Player
 		}
 
 		/// <summary>
-		/// Computes the push offset against nearby enemies.
+		///     Computes the push offset against nearby enemies.
 		/// </summary>
 		/// <param name="playerPos">Current player position.</param>
 		/// <returns>Push vector to apply this physics step.</returns>

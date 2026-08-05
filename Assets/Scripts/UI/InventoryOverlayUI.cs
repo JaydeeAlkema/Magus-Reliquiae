@@ -5,34 +5,34 @@ using UnityEngine.UI;
 namespace UI
 {
 	/// <summary>
-	/// Overlay that combines the relic board and bag views.
+	///     Overlay that combines the relic board and bag views.
 	/// </summary>
 	/// <remarks>
-	/// Put this on the inventory overlay prefab and wire the board, bag, and close button.
+	///     Put this on the inventory overlay prefab and wire the board, bag, and close button.
 	/// </remarks>
 	public class InventoryOverlayUI : MonoBehaviour
 	{
 		/// <summary>
-		/// Board view shown in the overlay.
+		///     Board view shown in the overlay.
 		/// </summary>
 		[SerializeField] private RelicBoardUI _boardUI;
 		/// <summary>
-		/// Bag view shown in the overlay.
+		///     Bag view shown in the overlay.
 		/// </summary>
 		[SerializeField] private BagOfHoldingUI _bagUI;
 		/// <summary>
-		/// Button used to close the overlay.
+		///     Button used to close the overlay.
 		/// </summary>
 		[SerializeField] private Button CloseButton;
 
 		private UpgradeScreenState _upgradeState;
 
 		/// <summary>
-		/// Board UI reference.
+		///     Board UI reference.
 		/// </summary>
 		public RelicBoardUI BoardUI => _boardUI;
 		/// <summary>
-		/// Bag UI reference.
+		///     Bag UI reference.
 		/// </summary>
 		public BagOfHoldingUI BagUI => _bagUI;
 
@@ -54,7 +54,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Shows the overlay and binds the current upgrade state.
+		///     Shows the overlay and binds the current upgrade state.
 		/// </summary>
 		/// <param name="upgradeState">Active upgrade state.</param>
 		public void Show(UpgradeScreenState upgradeState)
@@ -64,7 +64,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Hides the overlay and clears the active state.
+		///     Hides the overlay and clears the active state.
 		/// </summary>
 		public void Hide()
 		{

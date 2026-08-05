@@ -4,10 +4,10 @@ using UnityEngine;
 namespace Waves
 {
 	/// <summary>
-	/// Wave definition asset.
+	///     Wave definition asset.
 	/// </summary>
 	/// <remarks>
-	/// Create one asset per wave and assign enemy prefabs, the spawn area type, and the delay until the next wave.
+	///     Create one asset per wave and assign enemy prefabs, the spawn area type, and the delay until the next wave.
 	/// </remarks>
 	[CreateAssetMenu(fileName = "Wave", menuName = "ScriptableObjects/Enemy/Wave", order = 0)]
 	public class WaveSO : ScriptableObject
@@ -18,24 +18,24 @@ namespace Waves
 		/// </summary>
 		public int EnemiesToSpawn;
 		/// <summary>
-		/// Chance-based enemy entries.
+		///     Chance-based enemy entries.
 		/// </summary>
 		public List<WaveEnemy> PossibleEnemies;
 		/// <summary>
-		/// Enemies that are always included.
+		///     Enemies that are always included.
 		/// </summary>
 		public List<WaveEnemy> GuaranteedEnemies;
 		/// <summary>
-		/// Delay before the next wave begins.
+		///     Delay before the next wave begins.
 		/// </summary>
 		public float TimeUntilNextWave;
 		/// <summary>
-		/// Spawn area type used by this wave.
+		///     Spawn area type used by this wave.
 		/// </summary>
 		public WaveSpawnAreaType WaveAreaType;
 
 		/// <summary>
-		/// Builds the list of enemy prefabs to spawn for this wave.
+		///     Builds the list of enemy prefabs to spawn for this wave.
 		/// </summary>
 		/// <returns>Ordered list of enemy prefabs for spawning.</returns>
 		public List<Enemy.Enemy> GetEnemiesToSpawn()

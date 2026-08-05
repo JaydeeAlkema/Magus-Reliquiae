@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿using Enemy;
+using UnityEngine;
 
 namespace Relic
 {
 	/// <summary>
-	/// Runtime projectile for relic attacks.
+	///     Runtime projectile for relic attacks.
 	/// </summary>
 	/// <remarks>
-	/// Spawn it through the static factory; it loads the prefab, configures the sprite, and handles lifetime and hit logic.
+	///     Spawn it through the static factory; it loads the prefab, configures the sprite, and handles lifetime and hit
+	///     logic.
 	/// </remarks>
 	public sealed class RelicProjectile : MonoBehaviour
 	{
@@ -23,7 +25,7 @@ namespace Relic
 		private bool _isInitialized;
 
 		/// <summary>
-		/// Spawns a projectile instance.
+		///     Spawns a projectile instance.
 		/// </summary>
 		/// <param name="position">Spawn position.</param>
 		/// <param name="direction">Travel direction.</param>
@@ -101,12 +103,12 @@ namespace Relic
 
 		private bool TryHitEnemy()
 		{
-			if (Enemy.Enemy.Registry.Active.Count == 0)
+			if (EnemyRegistry.Active.Count == 0)
 				return false;
 
 			Vector2 projectilePosition = this.transform.position;
 			const float hitRadiusSqr = HIT_RADIUS * HIT_RADIUS;
-			foreach (Enemy.Enemy enemy in Enemy.Enemy.Registry.Active)
+			foreach (Enemy.Enemy enemy in EnemyRegistry.Active)
 			{
 				if (!enemy || !enemy.isActiveAndEnabled)
 					continue;

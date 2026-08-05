@@ -7,10 +7,10 @@ using UnityEngine;
 namespace Editor
 {
 	/// <summary>
-	/// Editor window for managing <see cref="TodoBoardSO"/> assets.
+	///     Editor window for managing <see cref="TodoBoardSO" /> assets.
 	/// </summary>
 	/// <remarks>
-	/// Open it from <c>Tools/Todo Board</c> to create boards, add tasks, and review task status.
+	///     Open it from <c>Tools/Todo Board</c> to create boards, add tasks, and review task status.
 	/// </remarks>
 	public class TodoBoardWindow : EditorWindow
 	{
@@ -58,7 +58,7 @@ namespace Editor
 		private readonly Dictionary<string, bool> _taskFoldouts = new();
 
 		/// <summary>
-		/// Opens the todo board window.
+		///     Opens the todo board window.
 		/// </summary>
 		[MenuItem("Tools/Todo Board")]
 		public static void Open()
@@ -67,7 +67,7 @@ namespace Editor
 		}
 
 		/// <summary>
-		/// Draws the window contents.
+		///     Draws the window contents.
 		/// </summary>
 		private void OnGUI()
 		{
@@ -415,7 +415,7 @@ namespace Editor
 		}
 
 		/// <summary>
-		/// Creates a new todo board asset in the project.
+		///     Creates a new todo board asset in the project.
 		/// </summary>
 		private void CreateBoardAsset()
 		{

@@ -3,47 +3,47 @@ using System;
 namespace Player
 {
 	/// <summary>
-	/// XP progression helper owned by <see cref="Player"/>.
+	///     XP progression helper owned by <see cref="Player" />.
 	/// </summary>
 	/// <remarks>
-	/// Construct it from the player prefab and use it to add XP, level up, and query thresholds.
+	///     Construct it from the player prefab and use it to add XP, level up, and query thresholds.
 	/// </remarks>
 	public sealed class PlayerXpService
 	{
 		private readonly float[] _levelThresholds;
 
 		/// <summary>
-		/// Fired after the player levels up.
+		///     Fired after the player levels up.
 		/// </summary>
 		public event Action<int> onLevelUp;
 
 		/// <summary>
-		/// Current accumulated XP.
+		///     Current accumulated XP.
 		/// </summary>
 		public float CurrentXP { get; private set; }
 		/// <summary>
-		/// Current level, starting at 1.
+		///     Current level, starting at 1.
 		/// </summary>
 		public int CurrentLevel { get; private set; }
 		/// <summary>
-		/// True when all thresholds are cleared.
+		///     True when all thresholds are cleared.
 		/// </summary>
 		public bool IsMaxLevel => CurrentLevel - 1 >= _levelThresholds.Length;
 
 		/// <summary>
-		/// XP threshold for the next level.
+		///     XP threshold for the next level.
 		/// </summary>
 		public float NextLevelThreshold => IsMaxLevel
 			? float.MaxValue
 			: _levelThresholds[CurrentLevel - 1];
 
 		/// <summary>
-		/// Remaining XP until the next level.
+		///     Remaining XP until the next level.
 		/// </summary>
 		public float XpToNextLevel => IsMaxLevel ? 0f : NextLevelThreshold - CurrentXP;
 
 		/// <summary>
-		/// Normalized progress through the current level.
+		///     Normalized progress through the current level.
 		/// </summary>
 		public float LevelProgress
 		{
@@ -58,7 +58,7 @@ namespace Player
 		}
 
 		/// <summary>
-		/// Creates the progression service.
+		///     Creates the progression service.
 		/// </summary>
 		/// <param name="levelThresholds">Ascending XP thresholds for levels beyond 1.</param>
 		public PlayerXpService(float[] levelThresholds)
@@ -69,7 +69,7 @@ namespace Player
 		}
 
 		/// <summary>
-		/// Adds XP and applies any resulting level-ups.
+		///     Adds XP and applies any resulting level-ups.
 		/// </summary>
 		/// <param name="amount">XP amount to add.</param>
 		public void AddXp(float amount)

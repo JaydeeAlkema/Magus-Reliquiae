@@ -5,10 +5,10 @@ using PlayerStats;
 namespace Relic
 {
 	/// <summary>
-	/// Runtime collection of owned relics.
+	///     Runtime collection of owned relics.
 	/// </summary>
 	/// <remarks>
-	/// Managed by <see cref="PlayerRelicManager"/>; keep it as gameplay data, not a scene component.
+	///     Managed by <see cref="PlayerRelicManager" />; keep it as gameplay data, not a scene component.
 	/// </remarks>
 	public class RelicInventory
 	{
@@ -22,12 +22,12 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Owned relic instances.
+		///     Owned relic instances.
 		/// </summary>
 		public IReadOnlyCollection<RelicInstance> OwnedRelics => _ownedById.Values;
 
 		/// <summary>
-		/// Acquires a relic into the inventory.
+		///     Acquires a relic into the inventory.
 		/// </summary>
 		/// <param name="relic">Relic definition.</param>
 		/// <param name="behavior">Optional behavior override.</param>
@@ -49,7 +49,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Upgrades an owned relic by ID.
+		///     Upgrades an owned relic by ID.
 		/// </summary>
 		/// <param name="relicId">Relic identifier.</param>
 		/// <returns>True when the upgrade succeeded.</returns>
@@ -72,7 +72,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Removes an owned relic by ID.
+		///     Removes an owned relic by ID.
 		/// </summary>
 		/// <param name="relicId">Relic identifier.</param>
 		/// <returns>True when the relic was removed.</returns>
@@ -93,7 +93,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Ticks all active relic behaviors.
+		///     Ticks all active relic behaviors.
 		/// </summary>
 		/// <param name="deltaTime">Frame delta time.</param>
 		public void Tick(float deltaTime)
@@ -108,7 +108,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Publishes a trigger to all active relic behaviors.
+		///     Publishes a trigger to all active relic behaviors.
 		/// </summary>
 		/// <param name="trigger">Trigger payload.</param>
 		public void Publish(RelicTrigger trigger)

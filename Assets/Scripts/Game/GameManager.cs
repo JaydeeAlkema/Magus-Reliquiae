@@ -5,11 +5,11 @@ using UnityEngine;
 namespace Game
 {
 	/// <summary>
-	/// Scene-level game bootstrapper.
+	///     Scene-level game bootstrapper.
 	/// </summary>
 	/// <remarks>
-	/// Place this on the persistent GameManager prefab. It sets the target frame rate, builds the
-	/// <see cref="GameContext"/>, and owns the top-level <see cref="GameStateManager"/>.
+	///     Place this on the persistent GameManager prefab. It sets the target frame rate, builds the
+	///     <see cref="GameContext" />, and owns the top-level <see cref="GameStateManager" />.
 	/// </remarks>
 	public class GameManager : MonoBehaviour
 	{
@@ -23,7 +23,7 @@ namespace Game
 		public GameStateManager StateManager { get; private set; }
 
 		/// <summary>
-		/// Initializes the run and creates the state machine.
+		///     Initializes the run and creates the state machine.
 		/// </summary>
 		private void Awake()
 		{
@@ -43,7 +43,7 @@ namespace Game
 		}
 
 		/// <summary>
-		/// Advances the active game state each frame.
+		///     Advances the active game state each frame.
 		/// </summary>
 		private void Update()
 		{

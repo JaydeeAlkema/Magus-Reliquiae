@@ -4,10 +4,10 @@ using UnityEngine;
 namespace Waves
 {
 	/// <summary>
-	/// World-space region that provides enemy spawn points.
+	///     World-space region that provides enemy spawn points.
 	/// </summary>
 	/// <remarks>
-	/// Place this on a scene object, size the spawn area in the inspector, and optionally anchor it to the camera edge.
+	///     Place this on a scene object, size the spawn area in the inspector, and optionally anchor it to the camera edge.
 	/// </remarks>
 	public class WaveSpawnArea : MonoBehaviour
 	{
@@ -48,12 +48,12 @@ namespace Waves
 		[SerializeField] private UnityEngine.Camera TargetCamera;
 
 		/// <summary>
-		/// Returns the configured spawn area type.
+		///     Returns the configured spawn area type.
 		/// </summary>
 		public WaveSpawnAreaType WaveSpawnAreaType => WaveAreaType;
 
 		/// <summary>
-		/// Keeps the spawn area anchored to the camera when enabled.
+		///     Keeps the spawn area anchored to the camera when enabled.
 		/// </summary>
 		private void LateUpdate()
 		{
@@ -64,7 +64,7 @@ namespace Waves
 		}
 
 		/// <summary>
-		/// Distributes enemies across the area using generated points.
+		///     Distributes enemies across the area using generated points.
 		/// </summary>
 		/// <param name="enemies">Enemy instances to place.</param>
 		public void DistributeEnemies(List<Enemy.Enemy> enemies)
@@ -77,7 +77,7 @@ namespace Waves
 		}
 
 		/// <summary>
-		/// Generates spawn points inside the area.
+		///     Generates spawn points inside the area.
 		/// </summary>
 		/// <param name="count">Number of points to generate.</param>
 		/// <returns>List of world-space spawn points.</returns>
@@ -124,7 +124,7 @@ namespace Waves
 		}
 
 		/// <summary>
-		/// Returns a single random point inside the area.
+		///     Returns a single random point inside the area.
 		/// </summary>
 		/// <returns>Random world-space point.</returns>
 		public Vector2 GetRandomPoint()
@@ -137,7 +137,7 @@ namespace Waves
 		}
 
 		/// <summary>
-		/// Places enemies at the provided points.
+		///     Places enemies at the provided points.
 		/// </summary>
 		/// <param name="enemies">Enemy instances to place.</param>
 		/// <param name="points">Spawn locations in matching order.</param>

@@ -3,15 +3,15 @@
 namespace Enemy
 {
 	/// <summary>
-	/// Pure movement helper owned by <see cref="Enemy"/>.
+	///     Pure movement helper owned by <see cref="Enemy" />.
 	/// </summary>
 	/// <remarks>
-	/// Enemy creates and drives this at runtime; it is not a scene component.
+	///     Enemy creates and drives this at runtime; it is not a scene component.
 	/// </remarks>
 	public class EnemyMovement
 	{
 		/// <summary>
-		/// Current transform position.
+		///     Current transform position.
 		/// </summary>
 		public Vector2 CurrentPos => _transform.position;
 
@@ -20,7 +20,7 @@ namespace Enemy
 		private Transform _transform;
 
 		/// <summary>
-		/// Binds the helper to an enemy instance and config.
+		///     Binds the helper to an enemy instance and config.
 		/// </summary>
 		/// <param name="enemy">Owning enemy.</param>
 		/// <param name="config">Movement config asset.</param>
@@ -31,7 +31,7 @@ namespace Enemy
 		}
 
 		/// <summary>
-		/// Updates the target position the enemy should move toward.
+		///     Updates the target position the enemy should move toward.
 		/// </summary>
 		/// <param name="targetPos">World-space target position.</param>
 		public void SetTargetPos(Vector2 targetPos)
@@ -40,7 +40,7 @@ namespace Enemy
 		}
 
 		/// <summary>
-		/// Moves the enemy a single step toward the cached target.
+		///     Moves the enemy a single step toward the cached target.
 		/// </summary>
 		public void MoveTowardsTarget()
 		{

@@ -5,10 +5,10 @@ using UnityEngine;
 namespace Todo
 {
 	/// <summary>
-	/// ScriptableObject container for editor-managed todo tasks.
+	///     ScriptableObject container for editor-managed todo tasks.
 	/// </summary>
 	/// <remarks>
-	/// Create one board asset from the Todo window, then add tasks through the asset or the editor tool.
+	///     Create one board asset from the Todo window, then add tasks through the asset or the editor tool.
 	/// </remarks>
 	[CreateAssetMenu(fileName = "TodoBoard", menuName = "ScriptableObjects/Todo/Board", order = 0)]
 	public class TodoBoardSO : ScriptableObject
@@ -16,12 +16,12 @@ namespace Todo
 		[SerializeField] private List<TodoTask> Tasks = new();
 
 		/// <summary>
-		/// Read-only access to all stored tasks.
+		///     Read-only access to all stored tasks.
 		/// </summary>
 		public IReadOnlyList<TodoTask> AllTasks => Tasks;
 
 		/// <summary>
-		/// Adds a task to the board.
+		///     Adds a task to the board.
 		/// </summary>
 		/// <param name="category">Optional grouping label.</param>
 		/// <param name="name">Task name.</param>
@@ -43,7 +43,7 @@ namespace Todo
 		}
 
 		/// <summary>
-		/// Removes the first task that matches the provided name and optional category.
+		///     Removes the first task that matches the provided name and optional category.
 		/// </summary>
 		/// <param name="name">Task name to remove.</param>
 		/// <param name="category">Optional category filter.</param>
@@ -71,7 +71,7 @@ namespace Todo
 		}
 
 		/// <summary>
-		/// Updates the first matching task's status.
+		///     Updates the first matching task's status.
 		/// </summary>
 		/// <param name="name">Task name to update.</param>
 		/// <param name="status">New status.</param>
@@ -99,7 +99,7 @@ namespace Todo
 		}
 
 		/// <summary>
-		/// Counts tasks by status.
+		///     Counts tasks by status.
 		/// </summary>
 		/// <param name="status">Status to count.</param>
 		/// <returns>Number of matching tasks.</returns>

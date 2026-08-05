@@ -4,10 +4,10 @@ using System.Collections.Generic;
 namespace PlayerStats
 {
 	/// <summary>
-	/// Runtime stat container for base values and active modifiers.
+	///     Runtime stat container for base values and active modifiers.
 	/// </summary>
 	/// <remarks>
-	/// Set base stats first, then add or remove modifiers by source ID to drive derived values.
+	///     Set base stats first, then add or remove modifiers by source ID to drive derived values.
 	/// </remarks>
 	public sealed class PlayerStatsModel
 	{
@@ -15,7 +15,7 @@ namespace PlayerStats
 		private readonly Dictionary<PlayerStatType, List<StatModifier>> _modifiers = new();
 
 		/// <summary>
-		/// Sets the unmodified value for a stat.
+		///     Sets the unmodified value for a stat.
 		/// </summary>
 		/// <param name="stat">Stat to update.</param>
 		/// <param name="value">Base value.</param>
@@ -25,7 +25,7 @@ namespace PlayerStats
 		}
 
 		/// <summary>
-		/// Reads the stored base value for a stat.
+		///     Reads the stored base value for a stat.
 		/// </summary>
 		/// <param name="stat">Stat to query.</param>
 		/// <returns>The stored base value, or zero if unset.</returns>
@@ -35,7 +35,7 @@ namespace PlayerStats
 		}
 
 		/// <summary>
-		/// Adds a modifier to the tracked list for its stat.
+		///     Adds a modifier to the tracked list for its stat.
 		/// </summary>
 		/// <param name="modifier">Modifier to add.</param>
 		public void AddModifier(StatModifier modifier)
@@ -50,7 +50,7 @@ namespace PlayerStats
 		}
 
 		/// <summary>
-		/// Removes all modifiers from a source ID.
+		///     Removes all modifiers from a source ID.
 		/// </summary>
 		/// <param name="sourceId">Source identifier to match.</param>
 		/// <returns>Number of removed modifiers.</returns>
@@ -74,7 +74,7 @@ namespace PlayerStats
 		}
 
 		/// <summary>
-		/// Computes the final value for a stat.
+		///     Computes the final value for a stat.
 		/// </summary>
 		/// <param name="stat">Stat to compute.</param>
 		/// <returns>Base value after additive and multiplicative modifiers.</returns>

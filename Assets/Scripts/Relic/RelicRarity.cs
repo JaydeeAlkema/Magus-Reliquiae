@@ -1,24 +1,24 @@
 namespace Relic
 {
 	/// <summary>
-	/// Relic rarity tiers.
+	///     Relic rarity tiers.
 	/// </summary>
 	public enum RelicRarity
 	{
 		/// <summary>
-		/// Common rarity.
+		///     Common rarity.
 		/// </summary>
 		Common = 0,
 		/// <summary>
-		/// Rare rarity.
+		///     Rare rarity.
 		/// </summary>
 		Rare = 1,
 		/// <summary>
-		/// Epic rarity.
+		///     Epic rarity.
 		/// </summary>
 		Epic = 2,
 		/// <summary>
-		/// Legendary rarity.
+		///     Legendary rarity.
 		/// </summary>
 		Legendary = 3,
 	}

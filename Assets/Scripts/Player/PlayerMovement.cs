@@ -4,10 +4,10 @@ using UnityEngine;
 namespace Player
 {
 	/// <summary>
-	/// Pure movement controller owned by <see cref="Player"/>.
+	///     Pure movement controller owned by <see cref="Player" />.
 	/// </summary>
 	/// <remarks>
-	/// Keep it constructed by the player prefab and configure collision settings through the owning component.
+	///     Keep it constructed by the player prefab and configure collision settings through the owning component.
 	/// </remarks>
 	public class PlayerMovement
 	{
@@ -20,7 +20,7 @@ namespace Player
 		private Vector2 _pendingMovement;
 
 		/// <summary>
-		/// Configures movement collision and cast settings.
+		///     Configures movement collision and cast settings.
 		/// </summary>
 		/// <param name="rigidbody">Player rigidbody.</param>
 		/// <param name="contactFilter">Contact filter used for casts.</param>
@@ -45,7 +45,7 @@ namespace Player
 		}
 
 		/// <summary>
-		/// Queues desired movement for the next physics step.
+		///     Queues desired movement for the next physics step.
 		/// </summary>
 		/// <param name="desiredDelta">Desired movement delta.</param>
 		public void AddInput(Vector2 desiredDelta)
@@ -54,7 +54,7 @@ namespace Player
 		}
 
 		/// <summary>
-		/// Returns and clears the queued input movement.
+		///     Returns and clears the queued input movement.
 		/// </summary>
 		/// <returns>Queued movement delta.</returns>
 		public Vector2 ConsumePendingMovement()
@@ -65,7 +65,7 @@ namespace Player
 		}
 
 		/// <summary>
-		/// Applies collision-aware movement.
+		///     Applies collision-aware movement.
 		/// </summary>
 		/// <param name="movement">Movement to attempt.</param>
 		/// <returns>The amount actually moved.</returns>

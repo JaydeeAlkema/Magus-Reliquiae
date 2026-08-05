@@ -5,10 +5,10 @@ using UnityEngine;
 namespace Relic
 {
 	/// <summary>
-	/// Pure board model for relic placement and merging.
+	///     Pure board model for relic placement and merging.
 	/// </summary>
 	/// <remarks>
-	/// Construct it with board dimensions and manipulate it through the placement helpers.
+	///     Construct it with board dimensions and manipulate it through the placement helpers.
 	/// </remarks>
 	public sealed class RelicBoard
 	{
@@ -16,30 +16,30 @@ namespace Relic
 		private readonly HashSet<RelicInstance> _placedRelics = new();
 
 		/// <summary>
-		/// Fired when a cell changes.
+		///     Fired when a cell changes.
 		/// </summary>
 		public event Action<Vector2Int> onCellChanged;
 		/// <summary>
-		/// Fired when the board size changes.
+		///     Fired when the board size changes.
 		/// </summary>
 		public event Action onBoardResized;
 
 		/// <summary>
-		/// Board width in cells.
+		///     Board width in cells.
 		/// </summary>
 		public int Columns { get; private set; }
 		/// <summary>
-		/// Board height in cells.
+		///     Board height in cells.
 		/// </summary>
 		public int Rows { get; private set; }
 
 		/// <summary>
-		/// Relics currently placed on the board.
+		///     Relics currently placed on the board.
 		/// </summary>
 		public IReadOnlyCollection<RelicInstance> PlacedRelics => _placedRelics;
 
 		/// <summary>
-		/// Creates a board with the specified size.
+		///     Creates a board with the specified size.
 		/// </summary>
 		/// <param name="columns">Board width.</param>
 		/// <param name="rows">Board height.</param>
@@ -53,7 +53,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Checks whether a coordinate is within the board bounds.
+		///     Checks whether a coordinate is within the board bounds.
 		/// </summary>
 		/// <param name="x">X coordinate.</param>
 		/// <param name="y">Y coordinate.</param>
@@ -68,7 +68,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Gets the occupant at a cell coordinate.
+		///     Gets the occupant at a cell coordinate.
 		/// </summary>
 		/// <param name="x">X coordinate.</param>
 		/// <param name="y">Y coordinate.</param>
@@ -83,7 +83,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Checks whether a shape can be placed at the anchor.
+		///     Checks whether a shape can be placed at the anchor.
 		/// </summary>
 		/// <param name="shape">Shape to test.</param>
 		/// <param name="anchor">Anchor position.</param>
@@ -102,7 +102,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Checks whether a shape can be placed while ignoring one instance.
+		///     Checks whether a shape can be placed while ignoring one instance.
 		/// </summary>
 		/// <param name="shape">Shape to test.</param>
 		/// <param name="anchor">Anchor position.</param>
@@ -123,7 +123,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Places an instance on the board.
+		///     Places an instance on the board.
 		/// </summary>
 		/// <param name="instance">Relic instance to place.</param>
 		/// <param name="shape">Placement shape.</param>
@@ -146,7 +146,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Removes an instance from the board.
+		///     Removes an instance from the board.
 		/// </summary>
 		/// <param name="instance">Instance to remove.</param>
 		/// <returns>True when the instance was found and cleared.</returns>
@@ -175,7 +175,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Expands the board size.
+		///     Expands the board size.
 		/// </summary>
 		/// <param name="newColumns">New board width.</param>
 		/// <param name="newRows">New board height.</param>

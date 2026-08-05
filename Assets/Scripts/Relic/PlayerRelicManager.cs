@@ -17,10 +17,10 @@ namespace Relic
 	}
 
 	/// <summary>
-	/// Owns the player's relic inventory and board model.
+	///     Owns the player's relic inventory and board model.
 	/// </summary>
 	/// <remarks>
-	/// Construct it from <see cref="global::Player.Player"/> and use it for acquire, place, merge, and removal flows.
+	///     Construct it from <see cref="global::Player.Player" /> and use it for acquire, place, merge, and removal flows.
 	/// </remarks>
 	public sealed class PlayerRelicManager
 	{
@@ -30,44 +30,44 @@ namespace Relic
 		private readonly List<RelicInstance> _tickBuffer = new();
 
 		/// <summary>
-		/// Inventory bag for unequipped relics.
+		///     Inventory bag for unequipped relics.
 		/// </summary>
 		public RelicBag Bag { get; }
 		/// <summary>
-		/// Board used for equipped relics.
+		///     Board used for equipped relics.
 		/// </summary>
 		public RelicBoard Board { get; }
 
 		/// <summary>
-		/// Blocks interaction when true.
+		///     Blocks interaction when true.
 		/// </summary>
 		public bool IsInteractionLocked { get; set; } = true;
 
 		/// <summary>
-		/// Fired when a relic is acquired.
+		///     Fired when a relic is acquired.
 		/// </summary>
 		public event Action<RelicInstance> onRelicAcquired;
 		/// <summary>
-		/// Fired when a relic is placed on the board.
+		///     Fired when a relic is placed on the board.
 		/// </summary>
 		public event Action<RelicInstance> onRelicPlaced;
 		/// <summary>
-		/// Fired when a relic is removed from the board.
+		///     Fired when a relic is removed from the board.
 		/// </summary>
 		public event Action<RelicInstance> onRelicUnequipped;
 		/// <summary>
-		/// Fired when a merge completes.
+		///     Fired when a merge completes.
 		/// </summary>
 		public event Action<RelicInstance, int> onRelicMerged;
 
 		/// <summary>
-		/// Creates the player relic manager.
+		///     Creates the player relic manager.
 		/// </summary>
 		/// <param name="playerStats">Player stats model.</param>
 		/// <param name="boardColumns">Board width.</param>
 		/// <param name="boardRows">Board height.</param>
 		/// <param name="owner">Optional owning player.</param>
-		public PlayerRelicManager(PlayerStatsModel playerStats, int boardColumns, int boardRows, global::Player.Player owner = null)
+		public PlayerRelicManager(PlayerStatsModel playerStats, int boardColumns, int boardRows, Player.Player owner = null)
 		{
 			Bag = new RelicBag();
 			Board = new RelicBoard(boardColumns, boardRows);
@@ -75,7 +75,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Acquires a relic into the bag.
+		///     Acquires a relic into the bag.
 		/// </summary>
 		/// <param name="definition">Relic definition.</param>
 		/// <param name="behavior">Optional behavior override.</param>
@@ -96,7 +96,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Places a bag relic onto the board.
+		///     Places a bag relic onto the board.
 		/// </summary>
 		/// <param name="instance">Relic instance to place.</param>
 		/// <param name="anchor">Board anchor.</param>
@@ -117,7 +117,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Removes a placed relic back to the bag.
+		///     Removes a placed relic back to the bag.
 		/// </summary>
 		/// <param name="instance">Relic instance to remove.</param>
 		/// <returns>True when removal succeeded.</returns>
@@ -138,7 +138,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Attempts to merge a bag relic into a board relic.
+		///     Attempts to merge a bag relic into a board relic.
 		/// </summary>
 		/// <param name="bagRelic">Relic being consumed from the bag.</param>
 		/// <param name="boardRelic">Relic already on the board.</param>
@@ -183,7 +183,7 @@ namespace Relic
 
 
 		/// <summary>
-		/// Ticks all board relic behaviors.
+		///     Ticks all board relic behaviors.
 		/// </summary>
 		/// <param name="deltaTime">Frame delta time.</param>
 		public void Tick(float deltaTime)
@@ -198,7 +198,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Publishes a relic trigger to all active board relics.
+		///     Publishes a relic trigger to all active board relics.
 		/// </summary>
 		/// <param name="trigger">Trigger payload.</param>
 		public void Publish(RelicTrigger trigger)
@@ -213,7 +213,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Expands the board size.
+		///     Expands the board size.
 		/// </summary>
 		/// <param name="newColumns">New width.</param>
 		/// <param name="newRows">New height.</param>

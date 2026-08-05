@@ -7,10 +7,11 @@ using UnityEngine.UI;
 namespace UI
 {
 	/// <summary>
-	/// Single relic-board cell view.
+	///     Single relic-board cell view.
 	/// </summary>
 	/// <remarks>
-	/// Use this on the cell prefab and wire the background, icon, badge, and text references before handing it to <see cref="RelicBoardUI"/>.
+	///     Use this on the cell prefab and wire the background, icon, badge, and text references before handing it to
+	///     <see cref="RelicBoardUI" />.
 	/// </remarks>
 	[RequireComponent(typeof(Image))]
 	public class RelicCellUI : MonoBehaviour,
@@ -40,7 +41,7 @@ namespace UI
 
 
 		/// <summary>
-		/// Grid position for this cell.
+		///     Grid position for this cell.
 		/// </summary>
 		public Vector2Int GridPosition { get; private set; }
 
@@ -52,7 +53,7 @@ namespace UI
 
 
 		/// <summary>
-		/// Initializes the cell with a board position.
+		///     Initializes the cell with a board position.
 		/// </summary>
 		/// <param name="gridPos">Grid position.</param>
 		/// <param name="boardUI">Owning board view.</param>
@@ -65,7 +66,7 @@ namespace UI
 
 
 		/// <summary>
-		/// Refreshes the cell visuals from a board state.
+		///     Refreshes the cell visuals from a board state.
 		/// </summary>
 		/// <param name="occupant">Current relic occupant.</param>
 		/// <param name="isAnchor">Whether the cell is the anchor cell.</param>
@@ -78,7 +79,7 @@ namespace UI
 
 
 		/// <summary>
-		/// Marks the cell as a placement preview.
+		///     Marks the cell as a placement preview.
 		/// </summary>
 		/// <param name="isValid">Whether the preview should be green or red.</param>
 		public void SetPreview(bool isValid)
@@ -89,7 +90,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Clears preview visuals if the cell is previewed.
+		///     Clears preview visuals if the cell is previewed.
 		/// </summary>
 		public void ClearPreview()
 		{
@@ -155,7 +156,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Handles drops from the drag system.
+		///     Handles drops from the drag system.
 		/// </summary>
 		/// <param name="eventData">Pointer event payload.</param>
 		public void OnDrop(PointerEventData eventData)
@@ -164,7 +165,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Starts dragging the anchored relic.
+		///     Starts dragging the anchored relic.
 		/// </summary>
 		/// <param name="eventData">Pointer event payload.</param>
 		public void OnBeginDrag(PointerEventData eventData)
@@ -174,7 +175,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Updates drag feedback.
+		///     Updates drag feedback.
 		/// </summary>
 		/// <param name="eventData">Pointer event payload.</param>
 		public void OnDrag(PointerEventData eventData)
@@ -183,7 +184,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Ends drag feedback.
+		///     Ends drag feedback.
 		/// </summary>
 		/// <param name="eventData">Pointer event payload.</param>
 		public void OnEndDrag(PointerEventData eventData)

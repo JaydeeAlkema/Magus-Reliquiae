@@ -1,36 +1,37 @@
+using Enemy;
 using UnityEngine;
 
 namespace Relic
 {
 	/// <summary>
-	/// Auto-fire behavior for the starting relic.
+	///     Auto-fire behavior for the starting relic.
 	/// </summary>
 	[CreateAssetMenu(fileName = "StartingRelicAutoFireBehavior", menuName = "ScriptableObjects/Relic/Behaviors/Starting Relic Auto Fire", order = 0)]
 	public sealed class StartingRelicAutoFireBehavior : RelicBehaviorSO
 	{
 		/// <summary>
-		/// Fire cooldown in seconds.
+		///     Fire cooldown in seconds.
 		/// </summary>
 		[SerializeField][Min(0f)] private float CooldownSeconds = 2f;
 		/// <summary>
-		/// Projectile damage.
+		///     Projectile damage.
 		/// </summary>
 		[SerializeField][Min(1)] private int ProjectileDamage = 1;
 		/// <summary>
-		/// Projectile speed.
+		///     Projectile speed.
 		/// </summary>
 		[SerializeField][Min(0.1f)] private float ProjectileSpeed = 8f;
 		/// <summary>
-		/// Projectile lifetime.
+		///     Projectile lifetime.
 		/// </summary>
 		[SerializeField][Min(0.1f)] private float ProjectileLifetime = 3f;
 		/// <summary>
-		/// Spawn offset from the player.
+		///     Spawn offset from the player.
 		/// </summary>
 		[SerializeField][Min(0f)] private float ProjectileSpawnOffset = 0.35f;
 
 		/// <summary>
-		/// Creates the runtime behavior.
+		///     Creates the runtime behavior.
 		/// </summary>
 		/// <returns>A behavior instance.</returns>
 		public override IRelicBehavior CreateBehavior()
@@ -106,7 +107,7 @@ namespace Relic
 
 			private static Enemy.Enemy FindNearestEnemy(RelicRuntimeContext context)
 			{
-				if (Enemy.Enemy.Registry.Active.Count == 0)
+				if (EnemyRegistry.Active.Count == 0)
 					return null;
 
 				Vector2 origin = Vector2.zero;
@@ -115,7 +116,7 @@ namespace Relic
 
 				Enemy.Enemy nearest = null;
 				float nearestDistanceSqr = float.MaxValue;
-				foreach (Enemy.Enemy enemy in Enemy.Enemy.Registry.Active)
+				foreach (Enemy.Enemy enemy in EnemyRegistry.Active)
 				{
 					if (!enemy || !enemy.isActiveAndEnabled)
 						continue;

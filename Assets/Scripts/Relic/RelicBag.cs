@@ -4,35 +4,35 @@ using System.Collections.Generic;
 namespace Relic
 {
 	/// <summary>
-	/// Runtime bag for unequipped relics.
+	///     Runtime bag for unequipped relics.
 	/// </summary>
 	/// <remarks>
-	/// Construct it inside <see cref="PlayerRelicManager"/> and mutate it only through the add/remove API.
+	///     Construct it inside <see cref="PlayerRelicManager" /> and mutate it only through the add/remove API.
 	/// </remarks>
 	public sealed class RelicBag
 	{
 		private readonly List<RelicInstance> _instances = new();
 
 		/// <summary>
-		/// Fired when a relic is added.
+		///     Fired when a relic is added.
 		/// </summary>
 		public event Action<RelicInstance> onRelicAdded;
 		/// <summary>
-		/// Fired when a relic is removed.
+		///     Fired when a relic is removed.
 		/// </summary>
 		public event Action<RelicInstance> onRelicRemoved;
 
 		/// <summary>
-		/// Current relic list.
+		///     Current relic list.
 		/// </summary>
 		public IReadOnlyList<RelicInstance> Relics => _instances;
 		/// <summary>
-		/// Current bag size.
+		///     Current bag size.
 		/// </summary>
 		public int Count => _instances.Count;
 
 		/// <summary>
-		/// Adds a relic to the bag.
+		///     Adds a relic to the bag.
 		/// </summary>
 		/// <param name="instance">Relic to add.</param>
 		public void Add(RelicInstance instance)
@@ -43,7 +43,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Removes a relic from the bag.
+		///     Removes a relic from the bag.
 		/// </summary>
 		/// <param name="instance">Relic to remove.</param>
 		/// <returns>True when the relic was removed.</returns>
@@ -55,7 +55,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Checks whether the bag contains a relic.
+		///     Checks whether the bag contains a relic.
 		/// </summary>
 		/// <param name="instance">Relic to check.</param>
 		/// <returns>True when the relic is present.</returns>
@@ -65,7 +65,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Removes every relic from the bag.
+		///     Removes every relic from the bag.
 		/// </summary>
 		public void Clear()
 		{

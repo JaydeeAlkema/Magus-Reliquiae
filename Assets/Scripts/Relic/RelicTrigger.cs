@@ -1,25 +1,25 @@
 namespace Relic
 {
 	/// <summary>
-	/// Payload for relic trigger events.
+	///     Payload for relic trigger events.
 	/// </summary>
 	public readonly struct RelicTrigger
 	{
 		/// <summary>
-		/// Event type.
+		///     Event type.
 		/// </summary>
 		public readonly RelicTriggerEvent EventType;
 		/// <summary>
-		/// Integer payload.
+		///     Integer payload.
 		/// </summary>
 		public readonly int IntValue;
 		/// <summary>
-		/// Float payload.
+		///     Float payload.
 		/// </summary>
 		public readonly float FloatValue;
 
 		/// <summary>
-		/// Creates a trigger payload.
+		///     Creates a trigger payload.
 		/// </summary>
 		/// <param name="eventType">Trigger type.</param>
 		/// <param name="intValue">Integer payload.</param>

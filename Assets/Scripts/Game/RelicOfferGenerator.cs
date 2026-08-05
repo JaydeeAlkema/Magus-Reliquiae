@@ -7,16 +7,16 @@ using Random = UnityEngine.Random;
 namespace Game
 {
 	/// <summary>
-	/// Builds weighted relic offer lists for the upgrade screen.
+	///     Builds weighted relic offer lists for the upgrade screen.
 	/// </summary>
 	/// <remarks>
-	/// Feed it a catalogue and optional rarity weights, then call <see cref="GenerateOffers"/> when the
-	/// upgrade screen opens.
+	///     Feed it a catalogue and optional rarity weights, then call <see cref="GenerateOffers" /> when the
+	///     upgrade screen opens.
 	/// </remarks>
 	public sealed class RelicOfferGenerator
 	{
 		/// <summary>
-		/// Default rarity weights used when no custom table is provided.
+		///     Default rarity weights used when no custom table is provided.
 		/// </summary>
 		public static readonly float[] DefaultWeights =
 		{
@@ -27,7 +27,7 @@ namespace Game
 		private readonly float[] _rarityWeights;
 
 		/// <summary>
-		/// Creates a relic offer generator.
+		///     Creates a relic offer generator.
 		/// </summary>
 		/// <param name="catalogue">Catalogue used as the source of relics.</param>
 		/// <param name="rarityWeights">Optional rarity weight table.</param>
@@ -38,7 +38,7 @@ namespace Game
 		}
 
 		/// <summary>
-		/// Generates a list of unique relic offers.
+		///     Generates a list of unique relic offers.
 		/// </summary>
 		/// <param name="count">Maximum number of offers to return.</param>
 		/// <returns>Weighted, non-duplicate relic offers.</returns>
@@ -67,7 +67,7 @@ namespace Game
 		}
 
 		/// <summary>
-		/// Builds the candidate pool from the catalogue or Resources fallback.
+		///     Builds the candidate pool from the catalogue or Resources fallback.
 		/// </summary>
 		/// <returns>Candidate relics and their weights.</returns>
 		private List<(RelicSO, float)> BuildCandidates()
@@ -113,7 +113,7 @@ namespace Game
 		}
 
 		/// <summary>
-		/// Resolves the weight for a given rarity.
+		///     Resolves the weight for a given rarity.
 		/// </summary>
 		/// <param name="rarity">Rarity to look up.</param>
 		/// <returns>Configured rarity weight or a fallback value.</returns>
@@ -124,7 +124,7 @@ namespace Game
 		}
 
 		/// <summary>
-		/// Checks whether a relic contains a tag.
+		///     Checks whether a relic contains a tag.
 		/// </summary>
 		/// <param name="relic">Relic to inspect.</param>
 		/// <param name="tag">Tag name to search for.</param>
@@ -144,7 +144,7 @@ namespace Game
 		}
 
 		/// <summary>
-		/// Randomly picks one candidate using weighted selection.
+		///     Randomly picks one candidate using weighted selection.
 		/// </summary>
 		/// <param name="candidates">Candidate list.</param>
 		/// <returns>The picked index, or -1 when the list is empty.</returns>

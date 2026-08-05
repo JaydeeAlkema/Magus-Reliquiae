@@ -5,58 +5,58 @@ using UnityEngine;
 namespace Relic
 {
 	/// <summary>
-	/// Relic definition asset.
+	///     Relic definition asset.
 	/// </summary>
 	/// <remarks>
-	/// Create one per relic, then assign icon, metadata, shape, and behavior assets in the inspector.
+	///     Create one per relic, then assign icon, metadata, shape, and behavior assets in the inspector.
 	/// </remarks>
 	[CreateAssetMenu(fileName = "Relic", menuName = "ScriptableObjects/Relic/Relic", order = 0)]
 	public class RelicSO : ScriptableObject
 	{
 		/// <summary>
-		/// Unique relic identifier.
+		///     Unique relic identifier.
 		/// </summary>
 		public string Id;
 		/// <summary>
-		/// Display name shown in UI.
+		///     Display name shown in UI.
 		/// </summary>
 		public string DisplayName;
 		/// <summary>
-		/// Short description shown to the player.
+		///     Short description shown to the player.
 		/// </summary>
 		[TextArea(2, 6)] public string Description;
 		/// <summary>
-		/// Relic icon shown in UI.
+		///     Relic icon shown in UI.
 		/// </summary>
 		public Sprite Icon;
 		/// <summary>
-		/// Rarity used for offer weighting and visuals.
+		///     Rarity used for offer weighting and visuals.
 		/// </summary>
 		public RelicRarity Rarity = RelicRarity.Common;
 		/// <summary>
-		/// Maximum relic level.
+		///     Maximum relic level.
 		/// </summary>
 		[Min(1)] public int MaxLevel = 1;
 		/// <summary>
-		/// Asset that builds runtime relic behavior.
+		///     Asset that builds runtime relic behavior.
 		/// </summary>
 		[SerializeField] private RelicBehaviorSO Behavior;
 		/// <summary>
-		/// Optional text tags for filtering.
+		///     Optional text tags for filtering.
 		/// </summary>
 		public string[] Tags = Array.Empty<string>();
 		/// <summary>
-		/// Per-level data entries.
+		///     Per-level data entries.
 		/// </summary>
 		public List<RelicLevelData> Levels = new();
 
 		/// <summary>
-		/// Optional shape per level.
+		///     Optional shape per level.
 		/// </summary>
 		public readonly RelicShape[] ShapePerLevel = Array.Empty<RelicShape>();
 
 		/// <summary>
-		/// Gets the level data for the requested level.
+		///     Gets the level data for the requested level.
 		/// </summary>
 		/// <param name="level">1-based level index.</param>
 		/// <returns>The matching level data, or null.</returns>
@@ -70,7 +70,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Gets the placement shape for the requested level.
+		///     Gets the placement shape for the requested level.
 		/// </summary>
 		/// <param name="level">1-based level index.</param>
 		/// <returns>The matching shape, or the default shape.</returns>
@@ -85,7 +85,7 @@ namespace Relic
 		}
 
 		/// <summary>
-		/// Creates the runtime relic behavior.
+		///     Creates the runtime relic behavior.
 		/// </summary>
 		/// <returns>The created behavior, or null.</returns>
 		public IRelicBehavior CreateBehavior()

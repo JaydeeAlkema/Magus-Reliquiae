@@ -5,10 +5,11 @@ using UnityEngine;
 namespace Player
 {
 	/// <summary>
-	/// Root runtime component for the player prefab.
+	///     Root runtime component for the player prefab.
 	/// </summary>
 	/// <remarks>
-	/// Assign physics, relic, and tuning references in the inspector; the component builds movement, stats, and XP services at runtime.
+	///     Assign physics, relic, and tuning references in the inspector; the component builds movement, stats, and XP
+	///     services at runtime.
 	/// </remarks>
 	public class Player : MonoBehaviour
 	{
@@ -46,20 +47,20 @@ namespace Player
 		private PlayerEnemyPush _enemyPush;
 
 		/// <summary>
-		/// Current player stats model.
+		///     Current player stats model.
 		/// </summary>
 		public PlayerStatsModel Stats { get; private set; }
 		/// <summary>
-		/// Current relic manager.
+		///     Current relic manager.
 		/// </summary>
 		public PlayerRelicManager Relics { get; private set; }
 		/// <summary>
-		/// Current XP progression service.
+		///     Current XP progression service.
 		/// </summary>
 		public PlayerXpService XP { get; private set; }
 
 		/// <summary>
-		/// Adds XP to the player.
+		///     Adds XP to the player.
 		/// </summary>
 		/// <param name="amount">XP amount to add.</param>
 		public void AddXp(float amount)
@@ -68,7 +69,7 @@ namespace Player
 		}
 
 		/// <summary>
-		/// Builds runtime helpers and applies inspector tuning.
+		///     Builds runtime helpers and applies inspector tuning.
 		/// </summary>
 		private void Awake()
 		{
@@ -92,7 +93,7 @@ namespace Player
 		}
 
 		/// <summary>
-		/// Advances relic timers each frame.
+		///     Advances relic timers each frame.
 		/// </summary>
 		private void Update()
 		{
@@ -100,7 +101,7 @@ namespace Player
 		}
 
 		/// <summary>
-		/// Applies queued input and enemy pushback.
+		///     Applies queued input and enemy pushback.
 		/// </summary>
 		private void FixedUpdate()
 		{
@@ -114,7 +115,7 @@ namespace Player
 		}
 
 		/// <summary>
-		/// Queues movement for the current frame.
+		///     Queues movement for the current frame.
 		/// </summary>
 		/// <param name="desiredDelta">Requested movement delta.</param>
 		public void Move(Vector2 desiredDelta)
@@ -125,7 +126,7 @@ namespace Player
 		}
 
 		/// <summary>
-		/// Spawns the configured starting relic and places it on the board.
+		///     Spawns the configured starting relic and places it on the board.
 		/// </summary>
 		private void SetupStartingRelic()
 		{
@@ -149,6 +150,5 @@ namespace Player
 
 			Relics.IsInteractionLocked = previousLockState;
 		}
-
 	}
 }

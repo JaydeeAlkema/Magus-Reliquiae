@@ -7,28 +7,29 @@ using UnityEngine.UI;
 namespace UI
 {
 	/// <summary>
-	/// Drag-and-drop coordinator for relic UI.
+	///     Drag-and-drop coordinator for relic UI.
 	/// </summary>
 	/// <remarks>
-	/// Add it to the UI root, assign the canvas and ghost prefab, then initialize it with <see cref="PlayerRelicManager"/>.
+	///     Add it to the UI root, assign the canvas and ghost prefab, then initialize it with
+	///     <see cref="PlayerRelicManager" />.
 	/// </remarks>
 	public class RelicDragHandler : MonoBehaviour
 	{
 		/// <summary>
-		/// Singleton instance used by the bag and board cells.
+		///     Singleton instance used by the bag and board cells.
 		/// </summary>
 		public static RelicDragHandler Instance { get; private set; }
 
 		/// <summary>
-		/// Canvas used to spawn the drag ghost.
+		///     Canvas used to spawn the drag ghost.
 		/// </summary>
 		[SerializeField] private Canvas RootCanvas;
 		/// <summary>
-		/// Prefab used for the drag ghost.
+		///     Prefab used for the drag ghost.
 		/// </summary>
 		[SerializeField] private RectTransform GhostPrefab;
 		/// <summary>
-		/// Ghost size in UI pixels.
+		///     Ghost size in UI pixels.
 		/// </summary>
 		[SerializeField] private Vector2 GhostSize = new(80f, 80f);
 
@@ -59,7 +60,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Initializes the drag handler with runtime references.
+		///     Initializes the drag handler with runtime references.
 		/// </summary>
 		/// <param name="relicManager">Relic manager for board operations.</param>
 		/// <param name="boardUI">Board view.</param>
@@ -74,7 +75,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Starts dragging from the bag view.
+		///     Starts dragging from the bag view.
 		/// </summary>
 		/// <param name="instance">Dragged relic instance.</param>
 		/// <param name="eventData">Pointer event payload.</param>
@@ -88,7 +89,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Starts dragging from the board view.
+		///     Starts dragging from the board view.
 		/// </summary>
 		/// <param name="instance">Dragged relic instance.</param>
 		/// <param name="eventData">Pointer event payload.</param>
@@ -102,7 +103,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Updates ghost position and board preview.
+		///     Updates ghost position and board preview.
 		/// </summary>
 		/// <param name="eventData">Pointer event payload.</param>
 		public void UpdateDrag(PointerEventData eventData)
@@ -114,7 +115,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Ends the current drag interaction.
+		///     Ends the current drag interaction.
 		/// </summary>
 		/// <param name="eventData">Pointer event payload.</param>
 		public void EndDrag(PointerEventData eventData)
@@ -127,7 +128,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Handles a drop onto a board cell.
+		///     Handles a drop onto a board cell.
 		/// </summary>
 		/// <param name="targetCell">Cell under the pointer.</param>
 		public void HandleBoardDrop(RelicCellUI targetCell)
@@ -160,7 +161,7 @@ namespace UI
 		}
 
 		/// <summary>
-		/// Handles a drop back into the bag.
+		///     Handles a drop back into the bag.
 		/// </summary>
 		public void HandleBagDrop()
 		{

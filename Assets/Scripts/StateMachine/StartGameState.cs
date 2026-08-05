@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 namespace StateMachine
 {
 	/// <summary>
-	/// Boot state that starts a new run.
+	///     Boot state that starts a new run.
 	/// </summary>
 	/// <remarks>
-	/// Create it through the state machine setup, not as a scene object.
+	///     Create it through the state machine setup, not as a scene object.
 	/// </remarks>
 	public class StartGameState : State
 	{
@@ -18,18 +18,18 @@ namespace StateMachine
 		private readonly GameContext _context;
 
 		/// <summary>
-		/// True when the state is finished.
+		///     True when the state is finished.
 		/// </summary>
 		public override bool IsDone { get; protected set; }
 		/// <summary>
-		/// The next state after the main menu loads.
+		///     The next state after the main menu loads.
 		/// </summary>
 		public override State NextState { get; protected set; }
 
 		private AsyncOperation _loadOperation;
 
 		/// <summary>
-		/// Creates the start-game state.
+		///     Creates the start-game state.
 		/// </summary>
 		/// <param name="context">Shared game context.</param>
 		public StartGameState(GameContext context)
@@ -38,7 +38,7 @@ namespace StateMachine
 		}
 
 		/// <summary>
-		/// Begins loading the main menu scene.
+		///     Begins loading the main menu scene.
 		/// </summary>
 		public override void OnEnter()
 		{
@@ -55,7 +55,7 @@ namespace StateMachine
 		}
 
 		/// <summary>
-		/// Unhooks scene-load callbacks.
+		///     Unhooks scene-load callbacks.
 		/// </summary>
 		public override void OnExit()
 		{
@@ -67,7 +67,7 @@ namespace StateMachine
 		}
 
 		/// <summary>
-		/// No per-frame work is required while waiting for the scene load.
+		///     No per-frame work is required while waiting for the scene load.
 		/// </summary>
 		public override void Update() { }
 
